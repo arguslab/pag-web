@@ -8,3 +8,13 @@ Thumbs.db
 
 .rbenv-version
 .rvmrc
+
+.idea/scopes/
+.idea/dictionaries/
+.idea/inspectionProfiles/
+.idea/libraries/
+.idea/modules/
+.idea/.name
+.idea/*.xml
+!.idea/vcs.xml
+!.idea/uiDesigner.xml
