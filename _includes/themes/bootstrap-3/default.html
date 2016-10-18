@@ -17,9 +17,10 @@
     <link href="{{ ASSET_PATH }}/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
     <!-- Sticky Footer -->
     <link href="{{ ASSET_PATH }}/bootstrap/css/bs-sticky-footer.css" rel="stylesheet">
-    
+
+
     <!-- Custom styles -->
-    <!--<link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">-->
+    <link href="{{ ASSET_PATH }}/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,7 +42,7 @@
     <link href="{{ BASE_PATH }}{{ site.JB.rss_path }}" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
 
     <!-- Custom styles for this template -->
-    <link href="{{ ASSET_PATH }}/bootstrap/examples/carousel/carousel.css" rel="stylesheet">
+    <link href="{{ ASSET_PATH }}/bootstrap/examples/jumbotron/jumbotron.css" rel="stylesheet">
 
   </head>
 
@@ -74,11 +75,9 @@
           </form>
         </div><!-- /.navbar-collapse -->
       </div>
-    </nav></br>
+    </nav>
 
-    <div class="container">
-      {{ content }}
-    </div>
+    {{ content }}
 
     <div id="footer">
       <div class="container">

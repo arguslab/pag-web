@@ -63,3 +63,10 @@
   background: #57A957;
   border: 1px solid #4c964d;
   color: #FFF; }
+
+.page-header{
+  visibility: hidden;
+  padding-bottom:0px;
+  margin:-88px 0 0px;
+  border-bottom:1px solid #eee
+}

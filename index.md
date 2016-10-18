@@ -4,138 +4,54 @@ title: "Argus Static Analysis Products"
 ---
 {% include JB/setup %}
 
-<!-- Carousel
-================================================== -->
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    <li data-target="#myCarousel" data-slide-to="3"></li>
-  </ol>
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <img class="first-slide" src="/assets/images/saf.png" alt="First slide">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Static Analysis Framework</h1>
-          <p>Static analysis tool chains for Jawa language and Android.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Argus-SAF</a></p>
-        </div>
-      </div>
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h1>Argus Program Analysis Group.</h1>
+        <p>Argus-PAG conduct research to apply static analysis on Dalvik byte code of both Android applications and libraries, 
+           for the purpose of identifying potential malicious behaviors or program vulnerabilities.</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">About us &raquo;</a></p>
     </div>
-    <div class="item">
-      <img class="second-slide" src="/assets/images/jc.png" alt="Second slide">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Jawa Compiler</h1>
-          <p>Compile jawa code to java bytecode.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Jawa Compiler</a></p>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <img class="third-slide" src="/assets/images/gradle.png" alt="Third slide">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Jawa Gradle Plugins</h1>
-          <p>Gradle plugins to build Jawa program and Jawa-Android program.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Gradle</a></p>
-        </div>
-      </div>
-    </div>
-    <div class="item">
-      <img class="fourth-slide" src="/assets/images/cit.png" alt="Fourth slide">
-      <div class="container">
-        <div class="carousel-caption">
-          <h1>Code Inspection Tool</h1>
-          <p>Intellij plugin for inspect Android application.</p>
-          <p><a class="btn btn-lg btn-primary" href="#" role="button">Argus-CIT</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
 </div>
-<!-- /.carousel -->
 
-
-<!-- Marketing messaging and featurettes
-================================================== -->
-<!-- Wrap the rest of the page in another container to center all the content. -->
-
-<div class="container marketing">
-
-  <!-- Three columns of text below the carousel -->
-  <div class="row">
-    <div class="col-lg-4">
-      <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-      <h2>Heading</h2>
-      <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div><!-- /.col-lg-4 -->
-    <div class="col-lg-4">
-      <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-      <h2>Heading</h2>
-      <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div><!-- /.col-lg-4 -->
-    <div class="col-lg-4">
-      <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-      <h2>Heading</h2>
-      <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-    </div><!-- /.col-lg-4 -->
-  </div><!-- /.row -->
-
-
-  <!-- START THE FEATURETTES -->
-
-  <hr class="featurette-divider">
-
-  <div class="row featurette">
-    <div class="col-md-7">
-      <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Argus-SAF</h2>
+            <p>Argus-SAF is a static analysis framework for Android applications and libraries. 
+               It integrated Jawa and Amandroid, who have the capability to perform comprehensive, efficient and highly precise Inter-component Data Flow Analysis.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Jawa Language</h2>
+            <p>Jawa is an intemediate representation (IR) language for Java-like bytecode (eg., Java bytecode, Dalvik bytecode).
+               It is a subset of <a href="https://github.com/sireum/parser/blob/master/sireum-parser/src/main/resources/org/sireum/pilar/parser/Antlr4Pilar.g4">Pilar language</a>.
+               Jawa defines the standard for static analysis and IDE tools build upon it.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Jawa Compiler</h2>
+            <p>Jawa compiler provides compilation support for Jawa language. 
+               It provides lexer and parser to parse jawa code, and code generator to generate java bytecode from jawa code.
+               This gives Jawa language the ability to work with java program and perform cross compilation.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>jawa2java</h2>
+            <p>Jawa-to-Java provides user the ability to translate Jawa code to Java code,
+               which makes the user reverse engineering apk code much easier.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Gradle Plugins</h2>
+            <p>We developed two gradle plugins (gradle-jawa-plugin and gradle-android-jawa-plugin) for allowing Jawa language to build with java and android program.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Argus-CIT</h2>
+            <p>Argus Code Inspection Tool is an intellij plugin, which provides an IDE environment for editing Jawa language.
+               It also helps user to do reverse engineering and perform analysis of Android application.</p>
+            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+        </div>
     </div>
-    <div class="col-md-5">
-      <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-    </div>
-  </div>
-
-  <hr class="featurette-divider">
-
-  <div class="row featurette">
-    <div class="col-md-7 col-md-push-5">
-      <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-    </div>
-    <div class="col-md-5 col-md-pull-7">
-      <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-    </div>
-  </div>
-
-  <hr class="featurette-divider">
-
-  <div class="row featurette">
-    <div class="col-md-7">
-      <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-      <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-    </div>
-    <div class="col-md-5">
-      <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-    </div>
-  </div>
-
-  <hr class="featurette-divider">
-
-  <!-- /END THE FEATURETTES -->
-</div><!-- /.container -->
+</div>

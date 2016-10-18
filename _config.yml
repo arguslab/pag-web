@@ -8,10 +8,10 @@ highlighter: pygments
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : SAF Web
+title : PAG Web
 tagline: Site Tagline
 author :
-  name : Fengguo Wei
+  name : Fengguo (Hugo) Wei
   email : fgwei521@gmail.com
   github : fgwei
   twitter : fgwei
