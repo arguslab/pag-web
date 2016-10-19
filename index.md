@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Argus Static Analysis Products"
+title: "Argus PAG"
 ---
 {% include JB/setup %}
 
@@ -19,14 +19,14 @@ title: "Argus Static Analysis Products"
         <div class="col-md-4">
             <h2>Argus-SAF</h2>
             <p>Argus-SAF is a static analysis framework for Android applications and libraries. 
-               It integrated Jawa and Amandroid, who have the capability to perform comprehensive, efficient and highly precise Inter-component Data Flow Analysis.</p>
+               It integrated Jawa and Amandroid, and have the capability to perform comprehensive, efficient and highly precise Inter-component Data Flow Analysis.</p>
             <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-4">
             <h2>Jawa Language</h2>
             <p>Jawa is an intemediate representation (IR) language for Java-like bytecode (eg., Java bytecode, Dalvik bytecode).
                It is a subset of <a href="https://github.com/sireum/parser/blob/master/sireum-parser/src/main/resources/org/sireum/pilar/parser/Antlr4Pilar.g4">Pilar language</a>.
-               Jawa defines the standard for static analysis and IDE tools build upon it.</p>
+               Jawa defines the grammar for static analysis and IDE tools build upon it.</p>
             <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-4">
@@ -39,7 +39,7 @@ title: "Argus Static Analysis Products"
         <div class="col-md-4">
             <h2>jawa2java</h2>
             <p>Jawa-to-Java provides user the ability to translate Jawa code to Java code,
-               which makes the user reverse engineering apk code much easier.</p>
+               which helps reverse engineering Android application much easier.</p>
             <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-4">
