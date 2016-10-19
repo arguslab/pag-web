@@ -6,11 +6,11 @@ title: "Argus Static Analysis Products"
 
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
-    <div class="container">
+    <div class="container" align="center">
         <h1>Argus Program Analysis Group.</h1>
         <p>Argus-PAG conduct research to apply static analysis on Dalvik bytecode of both Android applications and libraries, 
            for the purpose of identifying potential malicious behaviors or program vulnerabilities.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">About us &raquo;</a></p>
+        <p><a class="btn btn-primary btn-lg" href="about" role="button">About us &raquo;</a></p>
     </div>
 </div>
 
