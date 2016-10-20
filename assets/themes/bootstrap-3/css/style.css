@@ -70,3 +70,11 @@
   margin:-88px 0 0px;
   border-bottom:1px solid #eee
 }
+
+/*.container {*/
+  /*max-width: 45rem;*/
+/*}*/
+
+.masthead {
+  margin-bottom: 2rem;
+}
