@@ -1,6 +1,6 @@
 ---
-layout: default
-title: "Argus PAG"
+layout: page
+title: Home
 ---
 {% include JB/setup %}
 
