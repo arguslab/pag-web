@@ -71,9 +71,9 @@ div.page-header{
   border-bottom:1px solid #eee
 }
 
-/*.container {*/
-  /*max-width: 45rem;*/
-/*}*/
+.container {
+  max-width: 42rem;
+}
 
 .masthead {
   margin-bottom: 2rem;
