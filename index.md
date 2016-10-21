@@ -20,7 +20,7 @@ title: Home
             <h2>Argus-SAF</h2>
             <p>Argus-SAF is a static analysis framework for Android applications and libraries.
                It integrated Jawa and Amandroid, and have the capability to perform comprehensive, efficient and highly precise Inter-component Data Flow Analysis.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-default" href="argus-saf" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-6">
             <h2>Jawa Language</h2>
