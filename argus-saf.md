@@ -135,6 +135,7 @@ $ java -jar argus-saf_***-version-assembly.jar
 Above command will show you the usage of Argus-SAF.
 
 There are several modes you can use:
+
 ```sh
 Available Modes:
   a[picheck]    Detecting API misuse.
