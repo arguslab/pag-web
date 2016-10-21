@@ -113,13 +113,117 @@ Finally, ``Preprocess`` module will output meta data of ``x``.
   <p markdown="1">Please note that source codes and environment appeals above are all [Jawa](jawa-language) format.</p>
 </div>
 
+<h2 id="start">Getting Started</h2>
 
+This section will help you to start with using Argus-CIT.
+
+<h3 id="start-download">Download</h3>
+
+`Requirement: Java 8`
+
+1. Click: [![Download](https://api.bintray.com/packages/arguslab/maven/argus-saf/images/download.svg)](https://bintray.com/arguslab/maven/argus-saf/_latestVersion)
+2. In arguslab bintray repo click `Files > Version Folder`
+3. Download argus-saf_***-version-assembly.jar
+
+<h3 id="start-run">Run</h3>
+
+To run Argus-SAF, in a terminal command prompt, type:
+```shell
+$ java -jar argus-saf_***-version-assembly.jar
+```
+
+Above command will show you the usage of Argus-SAF.
+
+There are several modes you can use:
+```shell
+Available Modes:
+  a[picheck]    Detecting API misuse.
+  d[ecompile]   Decompile Apk file(s).
+  s[tage]       Stage middle results.
+  t[aint]       Perform taint analysis on Apk(s).
+```
+
+Let's take taint analysis as an example, type:
+```shell
+$ java -jar argus-saf_***-version-assembly.jar t
+```
+
+It will show you the usage and available options:
+```shell
+usage: t[aint] [options] <file_apk/dir>
+ -d,--debug            Output debug information.
+ -f,--force            Force delete previous decompile result. [Default: false]
+ -i,--ini <path>       Set .ini configuration file path.
+ -mo,--module <name>   Taint analysis module to use. [Default: DATA_LEAKAGE, Choices: (COMMUNICATION_LEAKAGE,
+                       OAUTH_TOKEN_TRACKING, PASSWORD_TRACKING, INTENT_INJECTION, DATA_LEAKAGE)]
+ -o,--output <dir>     Set output directory. [Default: .]
+```
+
+Two notable options are `-mo,--module` and `-i,--ini`.
+1. `-mo,--module` allows you to set the module you wanna use in the analysis. By default it set to **DATA_LEAKAGE** detection,
+you can switch between different modules by specify this option.
+2. `-i,--ini` allows you to specify the custom configuration file to use for the analysis, the detailed information will be
+discussed in [Configuration File](#configuration-file).
+
+<h3 id="start-test">Test</h3>
+To make sure Argus-SAF running on your environment, you can execute it on our test apks,
+which you can download from [ICC-Bench](https://github.com/fgwei/ICC-Bench/tree/master/apks).
+
+The command to run is:
+```shell
+$ java -jar argus-saf_***-version-assembly.jar t -o /outputPath /path/icc-bench
+```
+
+<div class="bs-callout bs-callout-default" id="source-code">
+  <h4>Install Amandroid Stash</h4>
+  <p markdown="1">If you are first time use Argus-SAF, above test command will automatically download and install
+  **Amandroid Stash** under path `~/.amandroid_stash`. It contains necessary android sdks and configuration files
+  for Argus-SAF's analysis.</p>
+</div>
+
+More test apks you can find from [DroidBench](https://github.com/secure-software-engineering/DroidBench/tree/master/apk).
+
+<h2 id="work">Working with Argus-SAF</h2>
+
+Argus-SAF released two libraries: `jawa-core` and `amandroid-core`. Both of them are exist in the [Maven Central Repo](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.arguslab%22)
+
+As aforementioned, `jawa-core` contains all the static analysis apis for analyzing [Jawa](jawa-language),
+`amandroid-core` contains all the android related analyzing apis and tools.
+
+<h3 id="work-obtain">Obtain Argus-SAF as Library</h3>
+
+You can obtain Argus-SAF as library for your own project to build new static analysis tools.
+
+Here, we suppose your project is a **SBT** project:
+
+Depend on `jawa-core` by editing build.sbt:
+```
+libraryDependencies += "com.github.arguslab" %% "jawa-core" % VERSION
+```
+
+Depend on `amandroid-core` by editing build.sbt:
+```
+libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
+```
+
+<div class="bs-callout bs-callout-warning" id="source-code">
+  <h4> Note that:</h4>
+  <p markdown="1"> 1. Depend on `amandroid-core` will automatically add `jawa-core` as dependency.</p>
+  <p markdown="1"> 2. If you use **Maven** or **Gradle** as the build tool, you should translate it to corresponding format
+  by following format in [Maven Central Repo](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.arguslab%22).</p>
+  <p markdown="1"> 3. `VERSION` should change to current released version.</p>
+</div>
+
+<h2 id="tutorial-load">Tutorial: Load APK</h2>
+
+TBA.
 
 </div>
 
 <div class="col-md-3" role="complementary" markdown="1">
   <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs">
     <ul class="nav bs-docs-sidenav">
+      <li> <a href="#Argus-SAF">Argus Static Analysis Framework</a> </li>
       <li> <a href="#Argus-Jawa">Argus-Jawa</a> </li>
       <li> <a href="#Argus-Amandroid">Argus-Amandroid</a>
         <ul class="nav">
@@ -127,6 +231,19 @@ Finally, ``Preprocess`` module will output meta data of ``x``.
           <li><a href="#Argus-Amandroid-Workflow">Amandroid Workflow</a></li>
         </ul>
       </li>
+      <li> <a href="#start">Getting Started</a>
+        <ul class="nav">
+          <li><a href="#start-download">Download</a></li>
+          <li><a href="#start-run">Run</a></li>
+          <li><a href="#start-test">Test</a></li>
+        </ul>
+      </li>
+      <li> <a href="#work">Working with Argus-SAF</a>
+        <ul class="nav">
+          <li><a href="#work-obtain">Obtain Argus-SAF as Library</a></li>
+        </ul>
+      </li>
+      <li> <a href="#tutorial-load">Tutorial: Load APK</a></li>
     </ul>
     <a href="#top" class="back-to-top"> Back to top </a>
   </nav>

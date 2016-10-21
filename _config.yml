@@ -13,7 +13,6 @@ tagline: 'Start from REAL problems, create solutions that LAST'
 description:         'We conduct research to apply static analysis on Dalvik bytecode of both Android applications and libraries, for the purpose of identifying potential malicious behaviors or program vulnerabilities.'
 url:                 http://lanyon.getpoole.com
 baseurl:             ''
-paginate:            5
 
 # About/contact
 author :

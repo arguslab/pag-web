@@ -235,3 +235,9 @@ h1.page-header {
 .anchorjs-link {
   color: inherit;
 }
+
+pre, code {
+  font-size: .6rem;
+  white-space:pre !important;
+  overflow-x:scroll !important
+}
