@@ -202,13 +202,13 @@ Here, we suppose your project is a **SBT** project:
 
 Depend on `jawa-core` by editing build.sbt:
 
-```
+```scala
 libraryDependencies += "com.github.arguslab" %% "jawa-core" % VERSION
 ```
 
 Depend on `amandroid-core` by editing build.sbt:
 
-```
+```scala
 libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
 ```
 
@@ -222,7 +222,15 @@ libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
 
 <h2 id="tutorial-load">Tutorial: Load APK</h2>
 
-TBA.
+Your project could be written in both **Java** and **Scala**, in this tutorial we use **Scala** for demonstration.
+
+First at all, make sure your project has `amandroid-core` as dependency.
+
+Then, following code will decompile an apk file with loading all the classes and resources.
+
+```scala
+
+```
 
 </div>
 
