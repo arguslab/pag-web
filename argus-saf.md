@@ -8,7 +8,9 @@ title: "Argus SAF"
 
 <a href="https://github.com/arguslab/Argus-SAF"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
 
-<h1 class="page-header" id="Argus-SAF"> <a name="Argus-SAF"></a>Argus Static Analysis Framework</h1>
+<h1 class="page-header" id="Argus-SAF">
+  Argus Static Analysis Framework
+</h1>
 
 <p class="lead" markdown="1">
 Argus-SAF is a static analysis framework that we build in house to do
@@ -23,7 +25,7 @@ and have the capability to perform comprehensive, efficient and highly precise I
 </div>
 
 
-## <a name="Argus-Jawa"></a>Argus-Jawa
+<h2 id="Argus-Jawa"> Argus-Jawa </h2>
 
 Argus-Jawa is a general static analysis framework for our home-brewing intermediate representation (IR) language <a href="jawa-language">Jawa</a>.
 Any java-like language (e.g., java, java bytecode, dalvik bytecode) can be analyzed if it have been
@@ -48,14 +50,14 @@ It can conduct/build:
 9. Taint Analysis
 10. Side Effect Analysis
 
-## <a name="Argus-Amandroid"></a>Argus-Amandroid
+<h2 id="Argus-Amandroid">Argus-Amandroid</h2>
 
 <div class="bs-callout bs-callout-primary" id="amandroid">
   <h4>Amandroid meaning</h4>
   <p markdown="1">**Aman** means secure in Indonesian, so Amandroid means secure android.</p>
 </div>
 
-### <a name="Argus-Amandroid-Overview"></a>Overview
+<h3 id="Argus-Amandroid-Overview">Overview</h3>
 
 Amandroid is a static analysis framework for Android apps.
 
@@ -90,7 +92,7 @@ We apply those analyses on hundreds of apps collected from Google Play’s popul
 and the results show that it is capable of finding real security issues and efficient enough in terms of analysis time.
 
 
-### <a name="Argus-Amandroid-Workflow"></a>Amandroid Workflow
+<h3 id="Argus-Amandroid-Workflow">Amandroid Workflow</h3>
 
 {% include image.html url="/assets/images/amandroid-pipeline.png" description="Figure: The pipeline of Amandroid framework." %}
 
@@ -116,11 +118,11 @@ Finally, ``Preprocess`` module will output meta data of ``x``.
 </div>
 
 <div class="col-md-3" role="complementary" markdown="1">
-  <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs affix">
-    <ul id="sidebar" class="nav bs-docs-sidenav">
+  <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs">
+    <ul class="nav bs-docs-sidenav">
       <li> <a href="#Argus-Jawa">Argus-Jawa</a> </li>
       <li> <a href="#Argus-Amandroid">Argus-Amandroid</a>
-        <ul class="nav nav-stacked">
+        <ul class="nav">
           <li><a href="#Argus-Amandroid-Overview">Overview</a></li>
           <li><a href="#Argus-Amandroid-Workflow">Amandroid Workflow</a></li>
         </ul>
