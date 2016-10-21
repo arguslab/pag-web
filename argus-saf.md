@@ -128,14 +128,14 @@ This section will help you to start with using Argus-CIT.
 <h3 id="start-run">Run</h3>
 
 To run Argus-SAF, in a terminal command prompt, type:
-```Shell
+```sh
 $ java -jar argus-saf_***-version-assembly.jar
 ```
 
 Above command will show you the usage of Argus-SAF.
 
 There are several modes you can use:
-```Shell
+```sh
 Available Modes:
   a[picheck]    Detecting API misuse.
   d[ecompile]   Decompile Apk file(s).
@@ -144,12 +144,12 @@ Available Modes:
 ```
 
 Let's take taint analysis as an example, type:
-```Shell
+```sh
 $ java -jar argus-saf_***-version-assembly.jar t
 ```
 
 It will show you the usage and available options:
-```Shell
+```sh
 usage: t[aint] [options] <file_apk/dir>
  -d,--debug            Output debug information.
  -f,--force            Force delete previous decompile result. [Default: false]
@@ -170,7 +170,7 @@ To make sure Argus-SAF running on your environment, you can execute it on our te
 which you can download from [ICC-Bench](https://github.com/fgwei/ICC-Bench/tree/master/apks).
 
 The command to run is:
-```Shell
+```sh
 $ java -jar argus-saf_***-version-assembly.jar t -o /outputPath /path/icc-bench
 ```
 
