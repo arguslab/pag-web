@@ -128,6 +128,7 @@ This section will help you to start with using Argus-CIT.
 <h3 id="start-run">Run</h3>
 
 To run Argus-SAF, in a terminal command prompt, type:
+
 ```sh
 $ java -jar argus-saf_***-version-assembly.jar
 ```
@@ -145,11 +146,13 @@ Available Modes:
 ```
 
 Let's take taint analysis as an example, type:
+
 ```sh
 $ java -jar argus-saf_***-version-assembly.jar t
 ```
 
 It will show you the usage and available options:
+
 ```sh
 usage: t[aint] [options] <file_apk/dir>
  -d,--debug            Output debug information.
@@ -171,6 +174,7 @@ To make sure Argus-SAF running on your environment, you can execute it on our te
 which you can download from [ICC-Bench](https://github.com/fgwei/ICC-Bench/tree/master/apks).
 
 The command to run is:
+
 ```sh
 $ java -jar argus-saf_***-version-assembly.jar t -o /outputPath /path/icc-bench
 ```
@@ -198,11 +202,13 @@ You can obtain Argus-SAF as library for your own project to build new static ana
 Here, we suppose your project is a **SBT** project:
 
 Depend on `jawa-core` by editing build.sbt:
+
 ```
 libraryDependencies += "com.github.arguslab" %% "jawa-core" % VERSION
 ```
 
 Depend on `amandroid-core` by editing build.sbt:
+
 ```
 libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
 ```
