@@ -5,7 +5,7 @@ permalink:           pretty
 relative_permalinks: false
 
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
-highlighter: pygments
+highlighter: rouge
 
 # Setup
 title : Argus-PAG
