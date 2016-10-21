@@ -216,7 +216,7 @@ libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
 <div class="bs-callout bs-callout-warning" id="source-code">
   <h4> Note that:</h4>
   <p markdown="1"> 1. Depend on `amandroid-core` will automatically add `jawa-core` as dependency.</p>
-  <p markdown="1"> 2. If you use **Maven** or **Gradle** as the build tool, you should translate it to corresponding format
+  <p markdown="1"> 2. If your project use **Maven** or **Gradle** as the build tool, you should translate it to corresponding format
   by following format in [Maven Central Repo](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.arguslab%22).</p>
   <p markdown="1"> 3. `VERSION` should change to current released version.</p>
 </div>
