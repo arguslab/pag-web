@@ -133,9 +133,7 @@ To run Argus-SAF, in a terminal command prompt, type:
 $ java -jar argus-saf_***-version-assembly.jar
 ```
 
-Above command will show you the usage of Argus-SAF.
-
-There are several modes you can use:
+Above command will show you the usage of Argus-SAF:
 
 ```sh
 Available Modes:
@@ -145,7 +143,7 @@ Available Modes:
   t[aint]       Perform taint analysis on Apk(s).
 ```
 
-Let's take taint analysis as an example, type:
+There are several modes you can use. Let's take taint analysis as an example, type:
 
 ```sh
 $ java -jar argus-saf_***-version-assembly.jar t
@@ -164,6 +162,7 @@ usage: t[aint] [options] <file_apk/dir>
 ```
 
 Two notable options are `-mo,--module` and `-i,--ini`.
+
 1. `-mo,--module` allows you to set the module you wanna use in the analysis. By default it set to **DATA_LEAKAGE** detection,
 you can switch between different modules by specify this option.
 2. `-i,--ini` allows you to specify the custom configuration file to use for the analysis, the detailed information will be
