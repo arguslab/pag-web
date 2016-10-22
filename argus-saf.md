@@ -178,7 +178,7 @@ The command to run is:
 $ java -jar argus-saf_***-version-assembly.jar t -o /outputPath /path/icc-bench
 ```
 
-<div class="bs-callout bs-callout-default" id="source-code">
+<div class="bs-callout bs-callout-default" id="amandroid-stash">
   <h4>Install Amandroid Stash</h4>
   <p markdown="1">If you are first time use Argus-SAF, above test command will automatically download and install
   **Amandroid Stash** under path `~/.amandroid_stash`. It contains necessary android sdks and configuration files
@@ -264,14 +264,14 @@ srcs foreach {
 }
 ```
 
-**`D.`** Initialize `Apk` and then load resources from decompiled app.
+**`D.`** Initialize `Apk`, load resources from decompiled app, and generate environment method for each component.
 
 ```scala
 val apk = new Apk(apkUri, outUri, srcs)
 AppInfoCollector.collectInfo(apk, global, outUri)
 ```
 
-<h3 id="tutorial-load-info" markdown="1">Retrieve Information from Apk</h3>
+<h3 id="tutorial-load-info">Retrieve Information from Apk</h3>
 
 ```scala
 val appName = apk.getAppName
@@ -279,6 +279,15 @@ val certificate = apk.getCertificates
 val uses_permissions = apk.getUsesPermissions
 val component_infos = apk.getComponentInfos // ComponentInfo(compType: [class type], typ: [ACTIVITY, SERVICE, RECEIVER, PROVIDER], exported: Boolean, enabled: Boolean, permission: ISet[String])
 val intent_filter = apk.getIntentFilterDB // IntentFilterDB contains intent filter information for each component.
+```
+
+<h3 id="tutorial-load-env">Access Environment Methods</h3>
+
+```scala
+var entryPoints = global.getEntryPoints(AndroidConstants.MAINCOMP_ENV) // Exposed components
+
+if(!public_only)
+  entryPoints ++= global.getEntryPoints(AndroidConstants.COMP_ENV) // Private components
 ```
 
 <h3 id="tutorial-load-full">Full Example</h3>
@@ -362,7 +371,7 @@ public class Hello {
 
 To load the `Hello` class and access its attributes:
 
-**`A.`** Load the class into `Global`.
+**`A.`** Load APK follow previous [tutorial](#tutorial-load).
 
 **`B.`** Do following:
 
@@ -396,15 +405,67 @@ val cfg = JawaAlirInfoProvider.getCfg(method)
 ```scala
 val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
 val cfg = JawaAlirInfoProvider.getCfg(method)
-val rda = JawaAlirInfoProvider.getCfg(method, cfg)
+val rda = JawaAlirInfoProvider.getRda(method, cfg)
+```
+
+
+<h3 id="tutorial-graph-idfg">Inter-procedural Data Flow Graph</h3>
+
+`Inter-procedural Data Flow Graph` (`IDFG`) is a combination of `Inter-procedural Control Flow Graph` (`ICFG`)
+and a `points-to information map` which denotes that at each program point what are the possible Object types.
+
+We have two points-to analysis algorithm to build `IDFG`: `InterproceduralSuperSpark`, `AndroidReachingFactsAnalysis`.
+
+Most of the time `InterproceduralSuperSpark` is just used to build [Call Graph](#tutorial-graph-cg) efficiently, because
+it is more light-weight than `AndroidReachingFactsAnalysis`, but still preserves enough precision (flow-,object-,field- sensitive).
+We will discuss this in [Call Graph](#tutorial-graph-cg) section.
+
+In this tutorial we will talk about how to build `IDFG` use `AndroidReachingFactsAnalysis`:
+
+**`A.`** Configuration. `AndroidReachingFactsAnalysisConfig` contains following global variables:
+
+1. `resolve_icc`: control whether find ICC call target and passing points-to facts to target component.
+2. `resolve_static_init`: control whether handle static init when analyzing. (Recommend to turn this off as it is very time consuming.)
+3. `parallel`: control whether run analysis in parallel mode. (Don't suggest to turn this on, as we have more robust [Akka Actor](http://akka.io/) solution.)
+
+<div class="bs-callout bs-callout-primary" id="res-icc">
+  <h4>Whether Resolving ICC</h4>
+  <p markdown="1">We introduced `Component Based Analysis` approach to handle ICC communication in a more scalable way. Thus,
+  if you are using this approach, you should turn `resolve_icc` off.</p>
+</div>
+
+To set those variables is very simple:
+
+```scala
+AndroidReachingFactsAnalysisConfig.resolve_icc = false
+AndroidReachingFactsAnalysisConfig.resolve_static_init = false
+AndroidReachingFactsAnalysisConfig.parallel = false
+```
+
+**`B.`** Load APK follow previous [tutorial](#tutorial-load).
+
+**`C.`** Perform analysis:
+
+```scala
+implicit val factory = new RFAFactFactory
+// ep is the entry point method for the analsis. Most of the time it is the environment method we generated for each component.
+val initialfacts = AndroidRFAConfig.getInitialFactsForMainEnvironment(ep)
+val timeout = Some(new MyTimeout(AndroidGlobalConfig.settings.timeout minutes))
+val idfg = AndroidReachingFactsAnalysis(global, apk, ep, initialfacts, new ClassLoadManager, timeout)
+```
+
+<h3 id="tutorial-graph-iddg">Inter-procedural Data Dependence Graph</h3>
+
+```scala
+val iddResult = InterproceduralDataDependenceAnalysis(global, idfg)
 ```
 
 <h3 id="tutorial-graph-cg">Call Graph</h3>
 
-There are few points-to analysis algorithm we can use to build `Call Graph`:
+There are few algorithms we can use to build `Call Graph`:
 `InterproceduralSuperSpark`, `SignatureBasedCallGraph`, `AndroidReachingFactsAnalysisBuilder`, etc.
 
-`InterproceduralSuperSpark` is the best option if you want to build a `Call Graph` with combination of precision and efficiency.
+`InterproceduralSuperSpark` is the best option if you want to build a `Call Graph` efficiently as well as preserve enough precision.
 
 ```scala
 // methods is the entry point methods you want to start with to build call graph.
@@ -413,9 +474,155 @@ val icfg = idfg.icfg
 val call_graph = icfg.getCallGraph
 ```
 
+<h3 id="tutorial-graph-output">Output Graphs in Different Format</h3>
+
+Our generated graphs allows three kind of output format: **Dot**, **GraphML**, **GML**.
+
+```scala
+graph.toDot(writer)
+graph.toGraphML(writer)
+graph.toGML(writer)
+```
+
 <h2 id="tutorial-taint">Tutorial: Taint Analysis</h2>
 
-TBA
+Argus-SAF's taint analysis leverages our `Inter-procedural Reaching Fact Analysis`
+and `Inter-procedural Data Dependence Analysis` algorithms, which reported in the **Amandroid** [[pdf](http://people.cs.ksu.edu/~fgwei/resources/papers/AmandroidCCS14.pdf)] paper.
+
+<h3 id="tutorial-taint-step">Step by Step</h3>
+
+**`A.`** Perform [Inter-procedural Data Flow Analysis](#tutorial-graph-idfg) and [Inter-procedural Data Dependence Analysis](#tutorial-graph-iddg)
+to generate `IDFG` and `IDDG`.
+
+**`B.`** Provide a `Source and Sink Manager` for the taint analysis.
+Argus-SAF currently have five build-in managers:
+
+1. `IntentInjectionSourceAndSinkManager`
+2. `PasswordSourceAndSinkManager`
+3. `OAuthSourceAndSinkManager`
+4. `DataLeakageAndroidSourceAndSinkManager`
+5. `CommunicationSourceAndSinkManager`
+
+```scala
+val ssm = module match {
+  case INTENT_INJECTION =>
+    new IntentInjectionSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
+  case PASSWORD_TRACKING =>
+    new PasswordSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
+  case OAUTH_TOKEN_TRACKING =>
+    new OAuthSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
+  case DATA_LEAKAGE =>
+    new DataLeakageAndroidSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
+  case COMMUNICATION_LEAKAGE =>
+    new CommunicationSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
+}
+```
+
+You can also provide your own `Source and Sink Manager` follow [tutorial](#tutorial-taint-ssm).
+
+**`C.`** Perform taint analysis:
+
+```scala
+val taint_analysis_result = AndroidDataDependentTaintAnalysis(global, iddResult, idfg.ptaresult, ssm)
+```
+
+<h3 id="tutorial-taint-ssm">Customize Source and Sink Manager</h3>
+
+`Source and Sink Manager` can specify four kind of **Source** points and two kind of **Sink** points.
+
+**Source** points:
+
+1. Api Source: Given api signature will return a tainted data.
+2. Callback Source: Given callback method will contain tainted data as parameter.
+3. UI Source: Given ui component contains tainted data.
+4. ICC Source: Given component environment method is receiving tainted data.
+
+**Sink** points:
+
+1. Api Sink: Given api signature will leak its parameters.
+2. Icc Sink: Given ICC method will leak Intent.
+
+For both **Api Source** and **Api Sink** we can specify it in a `Source and Sink File` using following format:
+
+```
+Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String; SENSITIVE_INFO -> _SOURCE_
+Landroid/content/pm/PackageManager;.queryBroadcastReceivers:(Landroid/content/Intent;I)Ljava/util/List; SENSITIVE_INFO -> _SOURCE_
+Landroid/os/Handler;.obtainMessage:(ILjava/lang/Object;)Landroid/os/Message; MESSAGE -> _SOURCE_
+Landroid/util/Log;.d:(Ljava/lang/String;Ljava/lang/String;)I -> _SINK_
+Ljava/io/Writer;.write:(Ljava/lang/String;II)V -> _SINK_ 1
+Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String;)V -> _SINK_ 1|2
+```
+
+<div class="bs-callout bs-callout-warning" id="ssm">
+  <p markdown="1">Note that, `1|2` in above format means the first and second parameter will leak the data, no number means all parameter.</p>
+</div>
+
+Your `Source and Sink Manager` need extends from `SourceAndSinkManager` or `AndroidSourceAndSinkManager` or `DefaultAndroidSourceAndSinkManager`.
+Here we take `IntentInjectionSourceAndSinkManager` as an example to discuss:
+
+```scala
+package org.argus.amandroid.plugin.dataInjection
+
+import org.argus.amandroid.alir.pta.reachingFactsAnalysis.model.InterComponentCommunicationModel
+import org.argus.amandroid.alir.taintAnalysis.AndroidSourceAndSinkManager
+import org.argus.amandroid.core.Apk
+import org.argus.amandroid.core.parser.LayoutControl
+import org.argus.jawa.alir.controlFlowGraph.{ICFGInvokeNode, ICFGNode}
+import org.argus.jawa.alir.pta.PTAResult
+import org.sireum.pilar.ast._
+import org.sireum.util._
+import org.argus.jawa.core._
+
+/**
+ * @author <a href="mailto:fgwei521@gmail.com">Fengguo Wei</a>
+ * @author <a href="mailto:sroy@k-state.edu">Sankardas Roy</a>
+ */
+class IntentInjectionSourceAndSinkManager(
+    global: Global,
+    apk: Apk,
+    layoutControls: Map[Int, LayoutControl],
+    callbackSigs: ISet[Signature],
+    sasFilePath: String)
+    extends AndroidSourceAndSinkManager(global, apk, layoutControls, callbackSigs, sasFilePath){
+
+  // We only interested about icc source, so for api source we just return false
+  override def isSource(calleeSig: Signature, callerSig: Signature, callerLoc: JumpLocation): Boolean = {
+    false
+  }
+
+  // We only interested about icc source, so for callback source we just return false
+  override def isCallbackSource(sig: Signature): Boolean = {
+    false
+  }
+
+  // We only interested about icc source, so for ui source we just return false
+  override def isUISource(calleeSig: Signature, callerSig: Signature, callerLoc: JumpLocation): Boolean = {
+    false
+  }
+
+  // If the given point is environment method's entry node, we consider it as icc source.
+  override def isIccSource(entNode: ICFGNode, iddgEntNode: ICFGNode): Boolean = {
+    entNode == iddgEntNode
+  }
+
+  // if the given point is an ICC call, we mark it as icc sink.
+  override def isIccSink(invNode: ICFGInvokeNode, ptaresult: PTAResult): Boolean = {
+    var sinkflag = false
+    val calleeSet = invNode.getCalleeSet
+    calleeSet.foreach{
+      callee =>
+        if(InterComponentCommunicationModel.isIccOperation(callee.callee)){
+          sinkflag = true
+        }
+    }
+    sinkflag
+  }
+
+  // api source is using the default one, which implemented in AndroidSourceAndSinkManager.
+  // The basic idea is check whether given api signature is matching with api sinks specified in provided sasFile (Source and Sink File).
+}
+
+```
 
 </div>
 
@@ -446,6 +653,7 @@ TBA
         <ul class="nav">
           <li><a href="#tutorial-load-step">Step by Step</a></li>
           <li><a href="#tutorial-load-info">Retrieve Information from Apk</a></li>
+          <li><a href="#tutorial-load-env">Access Environment Methods</a></li>
           <li><a href="#tutorial-load-full">Full Example</a></li>
         </ul>
       </li>
@@ -454,10 +662,18 @@ TBA
         <ul class="nav">
           <li><a href="#tutorial-graph-cfg">Control Flow Graph</a></li>
           <li><a href="#tutorial-graph-rda">Reaching Definition Analysis</a></li>
+          <li><a href="#tutorial-graph-idfg">Inter-procedural Data Flow Graph</a></li>
+          <li><a href="#tutorial-graph-iddg">Inter-procedural Data Dependence Graph</a></li>
           <li><a href="#tutorial-graph-cg">Call Graph</a></li>
+          <li><a href="#tutorial-graph-output">Output Graphs in Different Format</a></li>
         </ul>
       </li>
-      <li> <a href="#tutorial-taint">Tutorial: Taint Analysis</a></li>
+      <li> <a href="#tutorial-taint">Tutorial: Taint Analysis</a>
+        <ul class="nav">
+          <li><a href="#tutorial-taint-step">Step by Step</a></li>
+          <li><a href="#tutorial-taint-ssm">Customize Source and Sink Manager</a></li>
+        </ul>
+      </li>
     </ul>
     <a href="#top" class="back-to-top"> Back to top </a>
   </nav>
