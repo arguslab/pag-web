@@ -224,13 +224,198 @@ libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
 
 Your project could be written in both **Java** and **Scala**, in this tutorial we use **Scala** for demonstration.
 
+<h3 id="tutorial-load-step">Step by Step</h3>
+
 First at all, make sure your project has `amandroid-core` as dependency.
 
-Then, following code will decompile an apk file with loading all the classes and resources.
+Then, following steps will decompile an apk file with loading all the classes and resources.
+
+**`A.`** Initialize `Global`. `Global` is the class loader and class path manager for our analysis.
 
 ```scala
-
+val apkUri = FileUtil.toUri(filePath)
+val reporter = new DefaultReporter
+val global = new Global(apkUri, reporter)
+global.setJavaLib(AndroidGlobalConfig.settings.lib_files)
 ```
+
+**`B.`** Prepare `DecompilerSettings`. It defines the decompile layout, message level, odex dependence files,
+and whether force delete the output folder if it's already exist.
+
+```scala
+val layout = DecompileLayout(outputUri)
+val settings = DecompilerSettings(
+  AndroidGlobalConfig.settings.dependence_dir.map(FileUtil.toUri),
+  dexLog = false, debugMode = false, removeSupportGen = true,
+  forceDelete = false, None, layout)
+```
+
+**`C.`** Decompile the apk and load jawa code into `Global`.
+
+```scala
+val (outUri, srcs, _) = ApkDecompiler.decompile(apkUri, settings)
+srcs foreach {
+  src =>
+    val fileUri = FileUtil.toUri(FileUtil.toFilePath(outUri) + File.separator + src)
+    if(FileUtil.toFile(fileUri).exists()) {
+      //store the app's jawa code in global which is organized class by class.
+      global.load(fileUri, Constants.JAWA_FILE_EXT, AndroidLibraryAPISummary)
+    }
+}
+```
+
+**`D.`** Initialize `Apk` and then load resources from decompiled app.
+
+```scala
+val apk = new Apk(apkUri, outUri, srcs)
+AppInfoCollector.collectInfo(apk, global, outUri)
+```
+
+<h3 id="tutorial-load-info" markdown="1">Retrieve Information from Apk</h3>
+
+```scala
+val appName = apk.getAppName
+val certificate = apk.getCertificates
+val uses_permissions = apk.getUsesPermissions
+val component_infos = apk.getComponentInfos // ComponentInfo(compType: [class type], typ: [ACTIVITY, SERVICE, RECEIVER, PROVIDER], exported: Boolean, enabled: Boolean, permission: ISet[String])
+val intent_filter = apk.getIntentFilterDB // IntentFilterDB contains intent filter information for each component.
+```
+
+<h3 id="tutorial-load-full">Full Example</h3>
+
+```scala
+import java.io.File
+
+import org.argus.amandroid.core.appInfo.AppInfoCollector
+import org.argus.amandroid.core.decompile.{ApkDecompiler, DecompileLayout, DecompilerSettings}
+import org.argus.amandroid.core.util.AndroidLibraryAPISummary
+import org.argus.amandroid.core.{AndroidGlobalConfig, Apk}
+import org.argus.jawa.core.{Constants, DefaultReporter, Global}
+import org.sireum.util._
+
+/**
+  * Created by fgwei on 10/22/16.
+  */
+object Tutorial {
+
+  def loadCode(apkUri: FileResourceUri, settings: DecompilerSettings, global: Global): (FileResourceUri, ISet[String]) = {
+    val (outUri, srcs, _) = ApkDecompiler.decompile(apkUri, settings)
+    srcs foreach {
+      src =>
+        val fileUri = FileUtil.toUri(FileUtil.toFilePath(outUri) + File.separator + src)
+        if(FileUtil.toFile(fileUri).exists()) {
+          //store the app's jawa code in global which is organized class by class.
+          global.load(fileUri, Constants.JAWA_FILE_EXT, AndroidLibraryAPISummary)
+        }
+    }
+    (outUri, srcs)
+  }
+
+  def loadApk(apkUri: FileResourceUri, settings: DecompilerSettings, global: Global): Apk = {
+    val (outUri, srcs) = loadCode(apkUri, settings, global)
+    val apk = new Apk(apkUri, outUri, srcs)
+    AppInfoCollector.collectInfo(apk, global, outUri)
+    apk
+  }
+
+  def main(args: Array[String]): Unit = {
+    if(args.length != 2) {
+      println("usage: apk_path output_path")
+      return
+    }
+    val fileUri = FileUtil.toUri(args(0))
+    val outputUri = FileUtil.toUri(args(1))
+    val reporter = new DefaultReporter
+    // Global is the class loader and class path manager
+    val global = new Global(fileUri, reporter)
+    global.setJavaLib(AndroidGlobalConfig.settings.lib_files)
+    val layout = DecompileLayout(outputUri)
+    val settings = DecompilerSettings(
+      AndroidGlobalConfig.settings.dependence_dir.map(FileUtil.toUri),
+      dexLog = false, debugMode = false, removeSupportGen = true,
+      forceDelete = false, None, layout)
+    val apk = loadApk(fileUri, settings, global)
+
+    val appName = apk.getAppName
+    val certificate = apk.getCertificates
+    val uses_permissions = apk.getUsesPermissions
+    val component_infos = apk.getComponentInfos // ComponentInfo(compType: [class type], typ: [ACTIVITY, SERVICE, RECEIVER, PROVIDER], exported: Boolean, enabled: Boolean, permission: ISet[String])
+    val intent_filter = apk.getIntentFilterDB // IntentFilterDB contains intent filter information for each component.
+  }
+}
+```
+
+<h2 id="tutorial-loadcfm">Tutorial: Load Class, Field, Method</h2>
+
+Suppose our apk have following class:
+
+```java
+package org.argus.test;
+
+public class Hello {
+    int i;
+    public void greeting() {
+        System.out.println("Hello World!");
+    }
+}
+```
+
+To load the `Hello` class and access its attributes:
+
+**`A.`** Load the class into `Global`.
+
+**`B.`** Do following:
+
+```scala
+val clazz: JawaClass = global.getClassOrResolve(new JawaType("org.argus.test.Hello"))
+val method_opt: Option[JawaMethod] = clazz.getDeclaredMethodByName("greeting")
+val field_opt: Option[JawaField] = clazz.getDeclaredField("i")
+```
+
+From `JawaClass`, `JawaMethod`, `JawaField` you can access their access flags, qualified name,
+overwritten information, etc. The detailed usage you can study from the source code.
+
+<h2 id="tutorial-graph">Tutorial: Generate Graphs</h2>
+
+In the tutorial we show how to generate [Control Flow Graph](#tutorial-graph-cfg), [Reaching Definition Analysis](#tutorial-graph-rda),
+[Call Graph](#tutorial-graph-cg).
+
+<h3 id="tutorial-graph-cfg">Control Flow Graph</h3>
+
+`Control Flow Graph` can be easily acquired from `JawaAlirInfoProvider` with `JawaMethod`.
+
+```scala
+val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
+val cfg = JawaAlirInfoProvider.getCfg(method)
+```
+
+<h3 id="tutorial-graph-rda">Reaching Definition Analysis</h3>
+
+`Reaching Definition Analysis` can be easily acquired from `JawaAlirInfoProvider` with `JawaMethod` and `Control Flow Graph`.
+
+```scala
+val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
+val cfg = JawaAlirInfoProvider.getCfg(method)
+val rda = JawaAlirInfoProvider.getCfg(method, cfg)
+```
+
+<h3 id="tutorial-graph-cg">Call Graph</h3>
+
+There are few points-to analysis algorithm we can use to build `Call Graph`:
+`InterproceduralSuperSpark`, `SignatureBasedCallGraph`, `AndroidReachingFactsAnalysisBuilder`, etc.
+
+`InterproceduralSuperSpark` is the best option if you want to build a `Call Graph` with combination of precision and efficiency.
+
+```scala
+// methods is the entry point methods you want to start with to build call graph.
+val idfg = InterproceduralSuperSpark(global, methods.map(_.getSignature))
+val icfg = idfg.icfg
+val call_graph = icfg.getCallGraph
+```
+
+<h2 id="tutorial-taint">Tutorial: Taint Analysis</h2>
+
+TBA
 
 </div>
 
@@ -257,7 +442,22 @@ Then, following code will decompile an apk file with loading all the classes and
           <li><a href="#work-obtain">Obtain Argus-SAF as Library</a></li>
         </ul>
       </li>
-      <li> <a href="#tutorial-load">Tutorial: Load APK</a></li>
+      <li> <a href="#tutorial-load">Tutorial: Load APK</a>
+        <ul class="nav">
+          <li><a href="#tutorial-load-step">Step by Step</a></li>
+          <li><a href="#tutorial-load-info">Retrieve Information from Apk</a></li>
+          <li><a href="#tutorial-load-full">Full Example</a></li>
+        </ul>
+      </li>
+      <li> <a href="#tutorial-loadcfm">Tutorial: Load Class, Field, Method</a></li>
+      <li> <a href="#tutorial-graph">Tutorial: Generate Graphs</a>
+        <ul class="nav">
+          <li><a href="#tutorial-graph-cfg">Control Flow Graph</a></li>
+          <li><a href="#tutorial-graph-rda">Reaching Definition Analysis</a></li>
+          <li><a href="#tutorial-graph-cg">Call Graph</a></li>
+        </ul>
+      </li>
+      <li> <a href="#tutorial-taint">Tutorial: Taint Analysis</a></li>
     </ul>
     <a href="#top" class="back-to-top"> Back to top </a>
   </nav>
