@@ -27,7 +27,7 @@ title: Home
             <p>Jawa is an intemediate representation (IR) language for Java-like bytecode (eg., Java bytecode, Dalvik bytecode).
                It is a subset of <a href="https://github.com/sireum/parser/blob/master/sireum-parser/src/main/resources/org/sireum/pilar/parser/Antlr4Pilar.g4">Pilar language</a>.
                Jawa defines the grammar for static analysis and IDE tools build upon it.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-default" href="jawa-language" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-6">
             <h2>Jawa Compiler</h2>
