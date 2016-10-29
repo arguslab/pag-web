@@ -129,37 +129,33 @@ This section will help you to start with using Argus-CIT.
 
 To run Argus-SAF, in a terminal command prompt, type:
 
-```sh
-$ java -jar argus-saf_***-version-assembly.jar
-```
+<pre><code class="bash">$ java -jar argus-saf_***-version-assembly.jar
+</code></pre>
 
 Above command will show you the usage of Argus-SAF:
 
-```sh
-Available Modes:
+<pre><code class="bash">Available Modes:
   a[picheck]    Detecting API misuse.
   d[ecompile]   Decompile Apk file(s).
   s[tage]       Stage middle results.
   t[aint]       Perform taint analysis on Apk(s).
-```
+</code></pre>
 
 There are several modes you can use. Let's take taint analysis as an example, type:
 
-```sh
-$ java -jar argus-saf_***-version-assembly.jar t
-```
+<pre><code class="bash">$ java -jar argus-saf_***-version-assembly.jar t
+</code></pre>
 
 It will show you the usage and available options:
 
-```sh
-usage: t[aint] [options] <file_apk/dir>
+<pre><code class="bash">usage: t[aint] [options] &lt;file_apk/dir&gt;
  -d,--debug            Output debug information.
  -f,--force            Force delete previous decompile result. [Default: false]
- -i,--ini <path>       Set .ini configuration file path.
- -mo,--module <name>   Taint analysis module to use. [Default: DATA_LEAKAGE, Choices: (COMMUNICATION_LEAKAGE,
+ -i,--ini &lt;path&gt;       Set .ini configuration file path.
+ -mo,--module &lt;name&gt;   Taint analysis module to use. [Default: DATA_LEAKAGE, Choices: (COMMUNICATION_LEAKAGE,
                        OAUTH_TOKEN_TRACKING, PASSWORD_TRACKING, INTENT_INJECTION, DATA_LEAKAGE)]
- -o,--output <dir>     Set output directory. [Default: .]
-```
+ -o,--output &lt;dir&gt;     Set output directory. [Default: .]
+</code></pre>
 
 Two notable options are `-mo,--module` and `-i,--ini`.
 
@@ -174,9 +170,8 @@ which you can download from [ICC-Bench](https://github.com/fgwei/ICC-Bench/tree/
 
 The command to run is:
 
-```sh
-$ java -jar argus-saf_***-version-assembly.jar t -o /outputPath /path/icc-bench
-```
+<pre><code class="bash">$ java -jar argus-saf_***-version-assembly.jar t -o /outputPath /path/icc-bench
+</code></pre>
 
 <div class="bs-callout bs-callout-default" id="amandroid-stash">
   <h4>Install Amandroid Stash</h4>
@@ -202,15 +197,13 @@ Here, we suppose your project is a **SBT** project:
 
 Depend on `jawa-core` by editing build.sbt:
 
-```scala
-libraryDependencies += "com.github.arguslab" %% "jawa-core" % VERSION
-```
+<pre><code class="scala">libraryDependencies += "com.github.arguslab" %% "jawa-core" % VERSION
+</code></pre>
 
 Depend on `amandroid-core` by editing build.sbt:
 
-```scala
-libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
-```
+<pre><code class="scala">libraryDependencies += "com.github.arguslab" %% "amandroid-core" % VERSION
+</code></pre>
 
 <div class="bs-callout bs-callout-warning" id="source-code">
   <h4> Note that:</h4>
@@ -232,28 +225,25 @@ Then, following steps will decompile an apk file with loading all the classes an
 
 **`A.`** Initialize `Global`. `Global` is the class loader and class path manager for our analysis.
 
-```scala
-val apkUri = FileUtil.toUri(filePath)
+<pre><code class="scala">val apkUri = FileUtil.toUri(filePath)
 val reporter = new DefaultReporter
 val global = new Global(apkUri, reporter)
 global.setJavaLib(AndroidGlobalConfig.settings.lib_files)
-```
+</code></pre>
 
 **`B.`** Prepare `DecompilerSettings`. It defines the decompile layout, message level, odex dependence files,
 and whether force delete the output folder if it's already exist.
 
-```scala
-val layout = DecompileLayout(outputUri)
+<pre><code class="scala">val layout = DecompileLayout(outputUri)
 val settings = DecompilerSettings(
   AndroidGlobalConfig.settings.dependence_dir.map(FileUtil.toUri),
   dexLog = false, debugMode = false, removeSupportGen = true,
   forceDelete = false, None, layout)
-```
+</code></pre>
 
 **`C.`** Decompile the apk and load jawa code into `Global`.
 
-```scala
-val (outUri, srcs, _) = ApkDecompiler.decompile(apkUri, settings)
+<pre><code class="scala">val (outUri, srcs, _) = ApkDecompiler.decompile(apkUri, settings)
 srcs foreach {
   src =>
     val fileUri = FileUtil.toUri(FileUtil.toFilePath(outUri) + File.separator + src)
@@ -262,38 +252,34 @@ srcs foreach {
       global.load(fileUri, Constants.JAWA_FILE_EXT, AndroidLibraryAPISummary)
     }
 }
-```
+</code></pre>
 
 **`D.`** Initialize `Apk`, load resources from decompiled app, and generate environment method for each component.
 
-```scala
-val apk = new Apk(apkUri, outUri, srcs)
+<pre><code class="scala">val apk = new Apk(apkUri, outUri, srcs)
 AppInfoCollector.collectInfo(apk, global, outUri)
-```
+</code></pre>
 
 <h3 id="tutorial-load-info">Retrieve Information from Apk</h3>
 
-```scala
-val appName = apk.getAppName
+<pre><code class="scala">val appName = apk.getAppName
 val certificate = apk.getCertificates
 val uses_permissions = apk.getUsesPermissions
 val component_infos = apk.getComponentInfos // ComponentInfo(compType: [class type], typ: [ACTIVITY, SERVICE, RECEIVER, PROVIDER], exported: Boolean, enabled: Boolean, permission: ISet[String])
 val intent_filter = apk.getIntentFilterDB // IntentFilterDB contains intent filter information for each component.
-```
+</code></pre>
 
 <h3 id="tutorial-load-env">Access Environment Methods</h3>
 
-```scala
-var entryPoints = global.getEntryPoints(AndroidConstants.MAINCOMP_ENV) // Exposed components
+<pre><code class="scala">var entryPoints = global.getEntryPoints(AndroidConstants.MAINCOMP_ENV) // Exposed components
 
 if(!public_only)
   entryPoints ++= global.getEntryPoints(AndroidConstants.COMP_ENV) // Private components
-```
+</code></pre>
 
 <h3 id="tutorial-load-full">Full Example</h3>
 
-```scala
-import java.io.File
+<pre><code class="scala">import java.io.File
 
 import org.argus.amandroid.core.appInfo.AppInfoCollector
 import org.argus.amandroid.core.decompile.{ApkDecompiler, DecompileLayout, DecompilerSettings}
@@ -352,14 +338,13 @@ object Tutorial {
     val intent_filter = apk.getIntentFilterDB // IntentFilterDB contains intent filter information for each component.
   }
 }
-```
+</code></pre>
 
 <h2 id="tutorial-loadcfm">Tutorial: Load Class, Field, Method</h2>
 
 Suppose our apk have following class:
 
-```java
-package org.argus.test;
+<pre><code class="java">package org.argus.test;
 
 public class Hello {
     int i;
@@ -367,7 +352,7 @@ public class Hello {
         System.out.println("Hello World!");
     }
 }
-```
+</code></pre>
 
 To load the `Hello` class and access its attributes:
 
@@ -375,11 +360,10 @@ To load the `Hello` class and access its attributes:
 
 **`B.`** Do following:
 
-```scala
-val clazz: JawaClass = global.getClassOrResolve(new JawaType("org.argus.test.Hello"))
+<pre><code class="scala">val clazz: JawaClass = global.getClassOrResolve(new JawaType("org.argus.test.Hello"))
 val method_opt: Option[JawaMethod] = clazz.getDeclaredMethodByName("greeting")
 val field_opt: Option[JawaField] = clazz.getDeclaredField("i")
-```
+</code></pre>
 
 From `JawaClass`, `JawaMethod`, `JawaField` you can access their access flags, qualified name,
 overwritten information, etc. The detailed usage you can study from the source code.
@@ -393,20 +377,17 @@ In the tutorial we show how to generate [Control Flow Graph](#tutorial-graph-cfg
 
 `Control Flow Graph` can be easily acquired from `JawaAlirInfoProvider` with `JawaMethod`.
 
-```scala
-val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
-val cfg = JawaAlirInfoProvider.getCfg(method)
-```
+<pre><code class="scala">val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
+</code></pre>
 
 <h3 id="tutorial-graph-rda">Reaching Definition Analysis</h3>
 
 `Reaching Definition Analysis` can be easily acquired from `JawaAlirInfoProvider` with `JawaMethod` and `Control Flow Graph`.
 
-```scala
-val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
+<pre><code class="scala">val method: JawaMethod = clazz.getDeclaredMethodByName("greeting").get
 val cfg = JawaAlirInfoProvider.getCfg(method)
 val rda = JawaAlirInfoProvider.getRda(method, cfg)
-```
+</code></pre>
 
 
 <h3 id="tutorial-graph-idfg">Inter-procedural Data Flow Graph</h3>
@@ -436,29 +417,26 @@ In this tutorial we will talk about how to build `IDFG` use `AndroidReachingFact
 
 To set those variables is very simple:
 
-```scala
-AndroidReachingFactsAnalysisConfig.resolve_icc = false
+<pre><code class="scala">AndroidReachingFactsAnalysisConfig.resolve_icc = false
 AndroidReachingFactsAnalysisConfig.resolve_static_init = false
 AndroidReachingFactsAnalysisConfig.parallel = false
-```
+</code></pre>
 
 **`B.`** Load APK follow previous [tutorial](#tutorial-load).
 
 **`C.`** Perform analysis:
 
-```scala
-implicit val factory = new RFAFactFactory
+<pre><code class="scala">implicit val factory = new RFAFactFactory
 // ep is the entry point method for the analsis. Most of the time it is the environment method we generated for each component.
 val initialfacts = AndroidRFAConfig.getInitialFactsForMainEnvironment(ep)
 val timeout = Some(new MyTimeout(AndroidGlobalConfig.settings.timeout minutes))
 val idfg = AndroidReachingFactsAnalysis(global, apk, ep, initialfacts, new ClassLoadManager, timeout)
-```
+</code></pre>
 
 <h3 id="tutorial-graph-iddg">Inter-procedural Data Dependence Graph</h3>
 
-```scala
-val iddResult = InterproceduralDataDependenceAnalysis(global, idfg)
-```
+<pre><code class="scala">val iddResult = InterproceduralDataDependenceAnalysis(global, idfg)
+</code></pre>
 
 <h3 id="tutorial-graph-cg">Call Graph</h3>
 
@@ -467,22 +445,20 @@ There are few algorithms we can use to build `Call Graph`:
 
 `InterproceduralSuperSpark` is the best option if you want to build a `Call Graph` efficiently as well as preserve enough precision.
 
-```scala
-// methods is the entry point methods you want to start with to build call graph.
+<pre><code class="scala">// methods is the entry point methods you want to start with to build call graph.
 val idfg = InterproceduralSuperSpark(global, methods.map(_.getSignature))
 val icfg = idfg.icfg
 val call_graph = icfg.getCallGraph
-```
+</code></pre>
 
 <h3 id="tutorial-graph-output">Output Graphs in Different Format</h3>
 
 Our generated graphs allows three kind of output format: **Dot**, **GraphML**, **GML**.
 
-```scala
-graph.toDot(writer)
+<pre><code class="scala">graph.toDot(writer)
 graph.toGraphML(writer)
 graph.toGML(writer)
-```
+</code></pre>
 
 <h2 id="tutorial-taint">Tutorial: Taint Analysis</h2>
 
@@ -503,8 +479,7 @@ Argus-SAF currently have five build-in managers:
 4. `DataLeakageAndroidSourceAndSinkManager`
 5. `CommunicationSourceAndSinkManager`
 
-```scala
-val ssm = module match {
+<pre><code class="scala">val ssm = module match {
   case INTENT_INJECTION =>
     new IntentInjectionSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
   case PASSWORD_TRACKING =>
@@ -516,15 +491,14 @@ val ssm = module match {
   case COMMUNICATION_LEAKAGE =>
     new CommunicationSourceAndSinkManager(global, apk, apk.getLayoutControls, apk.getCallbackMethods, AndroidGlobalConfig.settings.sas_file)
 }
-```
+</code></pre>
 
 You can also provide your own `Source and Sink Manager` follow [tutorial](#tutorial-taint-ssm).
 
 **`C.`** Perform taint analysis:
 
-```scala
-val taint_analysis_result = AndroidDataDependentTaintAnalysis(global, iddResult, idfg.ptaresult, ssm)
-```
+<pre><code class="scala">val taint_analysis_result = AndroidDataDependentTaintAnalysis(global, iddResult, idfg.ptaresult, ssm)
+</code></pre>
 
 <h3 id="tutorial-taint-ssm">Customize Source and Sink Manager</h3>
 
@@ -544,14 +518,13 @@ val taint_analysis_result = AndroidDataDependentTaintAnalysis(global, iddResult,
 
 For both **Api Source** and **Api Sink** we can specify it in a `Source and Sink File` using following format:
 
-```
-Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String; SENSITIVE_INFO -> _SOURCE_
+<pre><code class="bash">Landroid/telephony/TelephonyManager;.getDeviceId:()Ljava/lang/String; SENSITIVE_INFO -> _SOURCE_
 Landroid/content/pm/PackageManager;.queryBroadcastReceivers:(Landroid/content/Intent;I)Ljava/util/List; SENSITIVE_INFO -> _SOURCE_
 Landroid/os/Handler;.obtainMessage:(ILjava/lang/Object;)Landroid/os/Message; MESSAGE -> _SOURCE_
 Landroid/util/Log;.d:(Ljava/lang/String;Ljava/lang/String;)I -> _SINK_
 Ljava/io/Writer;.write:(Ljava/lang/String;II)V -> _SINK_ 1
 Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String;)V -> _SINK_ 1|2
-```
+</code></pre>
 
 <div class="bs-callout bs-callout-warning" id="ssm">
   <p markdown="1">Note that, `1|2` in above format means the first and second parameter will leak the data, no number means all parameter.</p>
@@ -560,8 +533,7 @@ Ljava/net/URLConnection;.setRequestProperty:(Ljava/lang/String;Ljava/lang/String
 Your `Source and Sink Manager` need extends from `SourceAndSinkManager` or `AndroidSourceAndSinkManager` or `DefaultAndroidSourceAndSinkManager`.
 Here we take `IntentInjectionSourceAndSinkManager` as an example to discuss:
 
-```scala
-package org.argus.amandroid.plugin.dataInjection
+<pre><code class="scala">package org.argus.amandroid.plugin.dataInjection
 
 import org.argus.amandroid.alir.pta.reachingFactsAnalysis.model.InterComponentCommunicationModel
 import org.argus.amandroid.alir.taintAnalysis.AndroidSourceAndSinkManager
@@ -621,8 +593,7 @@ class IntentInjectionSourceAndSinkManager(
   // api source is using the default one, which implemented in AndroidSourceAndSinkManager.
   // The basic idea is check whether given api signature is matching with api sinks specified in provided sasFile (Source and Sink File).
 }
-
-```
+</code></pre>
 
 </div>
 

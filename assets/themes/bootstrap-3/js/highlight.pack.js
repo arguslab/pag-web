@@ -810,12 +810,86 @@
     relevance: 0
   };
 
+hljs.registerLanguage('bash', function(hljs) {
+  var VAR = {
+    className: 'variable',
+    variants: [
+      {begin: /\$[\w\d#@][\w\d_]*/},
+      {begin: /\$\{(.*?)}/}
+    ]
+  };
+  var QUOTE_STRING = {
+    className: 'string',
+    begin: /"/, end: /"/,
+    contains: [
+      hljs.BACKSLASH_ESCAPE,
+      VAR,
+      {
+        className: 'variable',
+        begin: /\$\(/, end: /\)/,
+        contains: [hljs.BACKSLASH_ESCAPE]
+      }
+    ]
+  };
+  var APOS_STRING = {
+    className: 'string',
+    begin: /'/, end: /'/
+  };
+
+  return {
+    aliases: ['sh', 'zsh'],
+    lexemes: /-?[a-z\._]+/,
+    keywords: {
+      keyword:
+        'if then else elif fi for while in do done case esac function',
+      literal:
+        'true false',
+      built_in:
+        // Shell built-ins
+        // http://www.gnu.org/software/bash/manual/html_node/Shell-Builtin-Commands.html
+        'break cd continue eval exec exit export getopts hash pwd readonly return shift test times ' +
+        'trap umask unset ' +
+        // Bash built-ins
+        'alias bind builtin caller command declare echo enable help let local logout mapfile printf ' +
+        'read readarray source type typeset ulimit unalias ' +
+        // Shell modifiers
+        'set shopt ' +
+        // Zsh built-ins
+        'autoload bg bindkey bye cap chdir clone comparguments compcall compctl compdescribe compfiles ' +
+        'compgroups compquote comptags comptry compvalues dirs disable disown echotc echoti emulate ' +
+        'fc fg float functions getcap getln history integer jobs kill limit log noglob popd print ' +
+        'pushd pushln rehash sched setcap setopt stat suspend ttyctl unfunction unhash unlimit ' +
+        'unsetopt vared wait whence where which zcompile zformat zftp zle zmodload zparseopts zprof ' +
+        'zpty zregexparse zsocket zstyle ztcp',
+      _:
+        '-ne -eq -lt -gt -f -d -e -s -l -a' // relevance booster
+    },
+    contains: [
+      {
+        className: 'meta',
+        begin: /^#![^\n]+sh\s*$/,
+        relevance: 10
+      },
+      {
+        className: 'function',
+        begin: /\w[\w\d_]*\s*\(\s*\)\s*\{/,
+        returnBegin: true,
+        contains: [hljs.inherit(hljs.TITLE_MODE, {begin: /\w[\w\d_]*/})],
+        relevance: 0
+      },
+      hljs.HASH_COMMENT_MODE,
+      QUOTE_STRING,
+      APOS_STRING,
+      VAR
+    ]
+  };
+});
+
 hljs.registerLanguage('grammar-kit', function(hljs){
 
   var SYMBOL = {
     className: 'symbol',
-    begin: '::=',
-    relevance: 10
+    begin: '::='
   };
 
   return {
@@ -830,6 +904,114 @@ hljs.registerLanguage('grammar-kit', function(hljs){
       hljs.APOS_STRING_MODE,
       hljs.QUOTE_STRING_MODE,
       SYMBOL
+    ]
+  };
+});
+
+hljs.registerLanguage('java', function(hljs) {
+  var JAVA_IDENT_RE = '[\u00C0-\u02B8a-zA-Z_$][\u00C0-\u02B8a-zA-Z_$0-9]*';
+  var GENERIC_IDENT_RE = JAVA_IDENT_RE + '(<' + JAVA_IDENT_RE + '(\\s*,\\s*' + JAVA_IDENT_RE + ')*>)?';
+  var KEYWORDS =
+    'false synchronized int abstract float private char boolean static null if const ' +
+    'for true while long strictfp finally protected import native final void ' +
+    'enum else break transient catch instanceof byte super volatile case assert short ' +
+    'package default double public try this switch continue throws protected public private ' +
+    'module requires exports do';
+
+  // https://docs.oracle.com/javase/7/docs/technotes/guides/language/underscores-literals.html
+  var JAVA_NUMBER_RE = '\\b' +
+    '(' +
+      '0[bB]([01]+[01_]+[01]+|[01]+)' + // 0b...
+      '|' +
+      '0[xX]([a-fA-F0-9]+[a-fA-F0-9_]+[a-fA-F0-9]+|[a-fA-F0-9]+)' + // 0x...
+      '|' +
+      '(' +
+        '([\\d]+[\\d_]+[\\d]+|[\\d]+)(\\.([\\d]+[\\d_]+[\\d]+|[\\d]+))?' +
+        '|' +
+        '\\.([\\d]+[\\d_]+[\\d]+|[\\d]+)' +
+      ')' +
+      '([eE][-+]?\\d+)?' + // octal, decimal, float
+    ')' +
+    '[lLfF]?';
+  var JAVA_NUMBER_MODE = {
+    className: 'number',
+    begin: JAVA_NUMBER_RE,
+    relevance: 0
+  };
+
+  return {
+    aliases: ['jsp'],
+    keywords: KEYWORDS,
+    illegal: /<\/|#/,
+    contains: [
+      hljs.COMMENT(
+        '/\\*\\*',
+        '\\*/',
+        {
+          relevance : 0,
+          contains : [
+            {
+              // eat up @'s in emails to prevent them to be recognized as doctags
+              begin: /\w+@/, relevance: 0
+            },
+            {
+              className : 'doctag',
+              begin : '@[A-Za-z]+'
+            }
+          ]
+        }
+      ),
+      hljs.C_LINE_COMMENT_MODE,
+      hljs.C_BLOCK_COMMENT_MODE,
+      hljs.APOS_STRING_MODE,
+      hljs.QUOTE_STRING_MODE,
+      {
+        className: 'class',
+        beginKeywords: 'class interface', end: /[{;=]/, excludeEnd: true,
+        keywords: 'class interface',
+        illegal: /[:"\[\]]/,
+        contains: [
+          {beginKeywords: 'extends implements'},
+          hljs.UNDERSCORE_TITLE_MODE
+        ]
+      },
+      {
+        // Expression keywords prevent 'keyword Name(...)' from being
+        // recognized as a function definition
+        beginKeywords: 'new throw return else',
+        relevance: 0
+      },
+      {
+        className: 'function',
+        begin: '(' + GENERIC_IDENT_RE + '\\s+)+' + hljs.UNDERSCORE_IDENT_RE + '\\s*\\(', returnBegin: true, end: /[{;=]/,
+        excludeEnd: true,
+        keywords: KEYWORDS,
+        contains: [
+          {
+            begin: hljs.UNDERSCORE_IDENT_RE + '\\s*\\(', returnBegin: true,
+            relevance: 0,
+            contains: [hljs.UNDERSCORE_TITLE_MODE]
+          },
+          {
+            className: 'params',
+            begin: /\(/, end: /\)/,
+            keywords: KEYWORDS,
+            relevance: 0,
+            contains: [
+              hljs.APOS_STRING_MODE,
+              hljs.QUOTE_STRING_MODE,
+              hljs.C_NUMBER_MODE,
+              hljs.C_BLOCK_COMMENT_MODE
+            ]
+          },
+          hljs.C_LINE_COMMENT_MODE,
+          hljs.C_BLOCK_COMMENT_MODE
+        ]
+      },
+      JAVA_NUMBER_MODE,
+      {
+        className: 'meta', begin: '@[A-Za-z]+'
+      }
     ]
   };
 });
@@ -927,6 +1109,121 @@ hljs.registerLanguage('jawa', function(hljs) {
       GLOBAL,
       RECORD,
       JAWA_NUMBER_MODE,
+      ANNOTATION
+    ]
+  };
+});
+
+hljs.registerLanguage('scala', function(hljs) {
+
+  var ANNOTATION = { className: 'meta', begin: '@[A-Za-z]+' };
+
+  // used in strings for escaping/interpolation/substitution
+  var SUBST = {
+    className: 'subst',
+    variants: [
+      {begin: '\\$[A-Za-z0-9_]+'},
+      {begin: '\\${', end: '}'}
+    ]
+  };
+
+  var STRING = {
+    className: 'string',
+    variants: [
+      {
+        begin: '"', end: '"',
+        illegal: '\\n',
+        contains: [hljs.BACKSLASH_ESCAPE]
+      },
+      {
+        begin: '"""', end: '"""',
+        relevance: 10
+      },
+      {
+        begin: '[a-z]+"', end: '"',
+        illegal: '\\n',
+        contains: [hljs.BACKSLASH_ESCAPE, SUBST]
+      },
+      {
+        className: 'string',
+        begin: '[a-z]+"""', end: '"""',
+        contains: [SUBST],
+        relevance: 10
+      }
+    ]
+
+  };
+
+  var SYMBOL = {
+    className: 'symbol',
+    begin: '\'\\w[\\w\\d_]*(?!\')'
+  };
+
+  var TYPE = {
+    className: 'type',
+    begin: '\\b[A-Z][A-Za-z0-9_]*',
+    relevance: 0
+  };
+
+  var NAME = {
+    className: 'title',
+    begin: /[^0-9\n\t "'(),.`{}\[\]:;][^\n\t "'(),.`{}\[\]:;]+|[^0-9\n\t "'(),.`{}\[\]:;=]/,
+    relevance: 0
+  };
+
+  var CLASS = {
+    className: 'class',
+    beginKeywords: 'class object trait type',
+    end: /[:={\[\n;]/,
+    excludeEnd: true,
+    contains: [
+      {
+        beginKeywords: 'extends with',
+        relevance: 10
+      },
+      {
+        begin: /\[/,
+        end: /\]/,
+        excludeBegin: true,
+        excludeEnd: true,
+        relevance: 0,
+        contains: [TYPE]
+      },
+      {
+        className: 'params',
+        begin: /\(/,
+        end: /\)/,
+        excludeBegin: true,
+        excludeEnd: true,
+        relevance: 0,
+        contains: [TYPE]
+      },
+      NAME
+    ]
+  };
+
+  var METHOD = {
+    className: 'function',
+    beginKeywords: 'def',
+    end: /[:={\[(\n;]/,
+    excludeEnd: true,
+    contains: [NAME]
+  };
+
+  return {
+    keywords: {
+      literal: 'true false null',
+      keyword: 'type yield lazy override def with val var sealed abstract private trait object if forSome for while throw finally protected extends import final return else break new catch super class case package default try this match continue throws implicit'
+    },
+    contains: [
+      hljs.C_LINE_COMMENT_MODE,
+      hljs.C_BLOCK_COMMENT_MODE,
+      STRING,
+      SYMBOL,
+      TYPE,
+      METHOD,
+      CLASS,
+      hljs.C_NUMBER_MODE,
       ANNOTATION
     ]
   };

@@ -4,28 +4,120 @@ title: "About"
 ---
 {% include JB/setup %}
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+## Team
 
-In the novel, *The Strange Case of Dr. Jeykll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Core Developer</h3>
+      </div>
+      <div class="panel-body">
+        <table>
+          <tbody><tr>
+            <td><img src="/public/images/fgwei.jpg" style="padding: 0;margin: 0;max-width: none;height: 150px;"></td>
+            <td valign="top">
+              <strong>Fengguo (Hugo) Wei</strong> <br>
+              <em>Ph.D. Candidate</em><br>
+              <a href="http://arguslab.org">Argus Laboratory</a><br>
+              <a href="http://www.usf.edu/engineering/cse/">CSE Department</a><br>
+              <a href="http://www.usf.edu/">University of South Florida</a><br><br>
+              <a href="http://fgwei.arguslab.org/">Website</a>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Developer</h3>
+      </div>
+      <div class="panel-body">
+        <table>
+          <tbody><tr>
+            <td><img src="/public/images/anwesh.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td valign="top">
+              <strong>Anwesh Tuladhar </strong> <br>
+              <em>Ph.D. Student</em><br>
+              <a href="http://arguslab.org">Argus Laboratory</a><br>
+              <a href="http://www.usf.edu/engineering/cse/">CSE Department</a><br>
+              <a href="http://www.usf.edu/">University of South Florida</a><br><br>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Faculty</h3>
+      </div>
+      <div class="panel-body">
+        <table>
+          <tbody><tr>
+            <td><img src="/public/images/simon.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td valign="top">
+              <strong>Xinming (Simon) Ou</strong> <br>
+              <em>Associate Professor</em><br>
+              <a href="http://arguslab.org">Argus Laboratory</a><br>
+              <a href="http://www.usf.edu/engineering/cse/">CSE Department</a><br>
+              <a href="http://www.usf.edu/">University of South Florida</a><br><br>
+              <a href="http://www.cse.usf.edu/~xou">Website</a>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+</div>
 
-There are currently two themes built on Poole:
+## Collaborators
 
-* [Hyde](http://hyde.getpoole.com)
-* [Lanyon](http://lanyon.getpoole.com)
-
-Learn more and contribute on [GitHub](https://github.com/poole).
-
-## Setup
-
-Some fun facts about the setup of this project include:
-
-* Built for [Jekyll](http://jekyllrb.com)
-* Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-* Coded with [Sublime Text 2](http://sublimetext.com), an amazing code editor
-* Designed and developed while listening to music like [Blood Bros Trilogy](https://soundcloud.com/maddecent/sets/blood-bros-series)
-
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
-
-Thanks for reading!
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Research Collaborator</h3>
+      </div>
+      <div class="panel-body">
+        <table>
+          <tbody><tr>
+            <td><img src="/public/images/robby.png" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td valign="top">
+              <strong>Robby</strong> <br>
+              <em>Professor</em><br>
+              <a href="http://santoslab.org">SAnToS Laboratory</a><br>
+              <a href="http://www.cis.ksu.edu">CIS Department</a><br>
+              <a href="http://www.ksu.edu">Kansas State University</a><br><br>
+              <a href="http://people.cis.ksu.edu/~robby">Website</a>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Research Collaborator</h3>
+      </div>
+      <div class="panel-body">
+        <table>
+          <tbody><tr>
+            <td><img src="/public/images/sankar.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td valign="top">
+              <strong>Sankardas Roy</strong> <br>
+              <em>Assistant Professor</em><br>
+              <a href="http://www.bgsu.edu/arts-and-sciences/computer-science/">CS Department</a><br>
+              <a href="http://www.bgsu.edu/">Bowling Green State University</a><br><br>
+              <a href="http://www.cs.bgsu.edu/sanroy/">Website</a>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+</div>

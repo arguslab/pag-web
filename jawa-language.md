@@ -25,8 +25,7 @@ It is a subset of [Pilar language](https://github.com/sireum/parser/blob/master/
 
 <h2 id="grammar">Grammar</h2>
 
-<pre><code class="hljs">
-CompilationUnit ::= ClassOrInterfaceDeclaration*
+<pre><code class="grammar-kit">CompilationUnit ::= ClassOrInterfaceDeclaration*
 
 ClassOrInterfaceDeclaration ::=
   'record' TypeDefSymbol KindAnnotation AccessFlagAnnotation ExtendsAndImplementsClause?
@@ -190,8 +189,7 @@ NUMBER_LITERAL ::= number ['i'|'I'|'l'|'L'|'f'|'F'|'d'|'D']
 
 <h2 id="example">Code Example</h2>
 
-<pre><code class="hljs">
-/* Block comment */
+<pre><code class="jawa">/* Block comment */
 /**
  * This is a doc comment.
  * @author fgwei
