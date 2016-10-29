@@ -46,7 +46,7 @@ title: Home
         <div class="col-md-6">
             <h2>Gradle Plugins</h2>
             <p>We developed two gradle plugins (gradle-jawa-plugin and gradle-android-jawa-plugin) for allowing Jawa language to build with java and android program.</p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-default" href="gradle-plugins" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-6">
             <h2>Argus-CIT</h2>
