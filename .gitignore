@@ -18,3 +18,5 @@ Thumbs.db
 .idea/*.xml
 !.idea/vcs.xml
 !.idea/uiDesigner.xml
+.sass-cache/
+_site/
