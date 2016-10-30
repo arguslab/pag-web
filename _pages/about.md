@@ -15,7 +15,7 @@ title: "About"
       <div class="panel-body">
         <table>
           <tbody><tr>
-            <td><img src="images/people/fgwei.jpg" style="padding: 0;margin: 0;max-width: none;height: 150px;"></td>
+            <td align="center"><img src="images/people/fgwei.jpg" style="padding: 0;margin: 0;max-width: none;height: 150px;"></td>
             <td valign="top">
               <strong>Fengguo (Hugo) Wei</strong> <br>
               <em>Ph.D. Candidate</em><br>
@@ -37,7 +37,7 @@ title: "About"
       <div class="panel-body">
         <table>
           <tbody><tr>
-            <td><img src="images/people/anwesh.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td align="center"><img src="images/people/anwesh.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
             <td valign="top">
               <strong>Anwesh Tuladhar </strong> <br>
               <em>Ph.D. Student</em><br>
@@ -60,7 +60,7 @@ title: "About"
       <div class="panel-body">
         <table>
           <tbody><tr>
-            <td><img src="images/people/simon.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td align="center"><img src="images/people/simon.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
             <td valign="top">
               <strong>Xinming (Simon) Ou</strong> <br>
               <em>Associate Professor</em><br>
@@ -87,7 +87,7 @@ title: "About"
       <div class="panel-body">
         <table>
           <tbody><tr>
-            <td><img src="images/people/robby.png" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td align="center"><img src="images/people/robby.png" style="margin: 0;max-width: none;height: 150px;"></td>
             <td valign="top">
               <strong>Robby</strong> <br>
               <em>Professor</em><br>
@@ -109,7 +109,7 @@ title: "About"
       <div class="panel-body">
         <table>
           <tbody><tr>
-            <td><img src="images/people/sankar.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
+            <td align="center"><img src="images/people/sankar.jpg" style="margin: 0;max-width: none;height: 150px;"></td>
             <td valign="top">
               <strong>Sankardas Roy</strong> <br>
               <em>Assistant Professor</em><br>
