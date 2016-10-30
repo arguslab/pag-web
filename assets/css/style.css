@@ -236,3 +236,11 @@ pre, code {
 body {
   font-size: inherit;
 }
+
+.page__hero--overlay {
+  padding-top: 80px;
+  padding-bottom: 90px;
+  background-color: #3385FF;
+  position: relative;
+  background-attachment: fixed;
+}

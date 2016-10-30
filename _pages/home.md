@@ -4,7 +4,7 @@ permalink: /
 header:
   overlay_color: "#5e616c"
   overlay_image: unsplash-image-1.jpg
-  overlay_filter: 0.2
+  overlay_filter: 0.4
   cta_label: "About Us &raquo;"
   cta_url: "/about"
   caption:
