@@ -213,6 +213,39 @@ Depend on `amandroid-core` by editing build.sbt:
   <p markdown="1"> 3. `VERSION` should change to current released version.</p>
 </div>
 
+<h2 id="configuration-file">Configuration File</h2>
+
+By default, **Argus-SAF** will use `~/.amandroid_stash/amandroid/config.ini` as the default configuration file.
+However, user could provide their own configuration file as well.
+
+Format is as following:
+
+<pre><code class="ini">; General configuration for amandroid
+[general]
+; Dependence directory for odex resolution.
+;dependence_dir = /path
+; Output debug information
+debug = false
+; Java Library jar files
+;lib_files = /path/lib1.jar:/path/lib2.jar
+
+; Configuration for data flow analysis
+[analysis]
+; Handle static initializer
+static_init = false
+parallel = false
+; Context length for k-context sensitive analysis
+k_context = 1
+; Source and sink list file
+;sas_file = /path/sas.txt
+; timeout setting for analyzing one component (minutes)
+timeout = 10
+
+; Concurrent settings for Amandroid actors
+[concurrent]
+;actor_conf_file = /path/application.conf
+</code></pre>
+
 <h2 id="tutorial-load">Tutorial: Load APK</h2>
 
 Your project could be written in both **Java** and **Scala**, in this tutorial we use **Scala** for demonstration.
@@ -407,7 +440,7 @@ In this tutorial we will talk about how to build `IDFG` use `AndroidReachingFact
 
 1. `resolve_icc`: control whether find ICC call target and passing points-to facts to target component.
 2. `resolve_static_init`: control whether handle static init when analyzing. (Recommend to turn this off as it is very time consuming.)
-3. `parallel`: control whether run analysis in parallel mode. (Don't suggest to turn this on, as we have more robust [Akka Actor](http://akka.io/) solution.)
+3. `parallel`: control whether run analysis in parallel mode. (We don't suggest to turn this on, as we have more robust [Akka Actor](http://akka.io/) solution.)
 
 <div class="bs-callout bs-callout-primary" id="res-icc">
   <h4>Whether Resolving ICC</h4>
@@ -620,6 +653,7 @@ class IntentInjectionSourceAndSinkManager(
           <li><a href="#work-obtain">Obtain Argus-SAF as Library</a></li>
         </ul>
       </li>
+      <li> <a href="#configuration-file">Configuration File</a></li>
       <li> <a href="#tutorial-load">Tutorial: Load APK</a>
         <ul class="nav">
           <li><a href="#tutorial-load-step">Step by Step</a></li>
