@@ -19,7 +19,7 @@ feature_row:
   - image_path: "images/projects/jawa-language.png"
     alt: "Jawa Language"
     title: "Jawa Language"
-    excerpt: "Jawa is an intemediate representation (IR) language for Java-like bytecode (eg., Java bytecode, Dalvik bytecode). It is a subset of Pilar language. Jawa defines the grammar for static analysis and IDE tools build upon it."
+    excerpt: "Jawa is an intermediate representation (IR) language for Java-like bytecode (eg., Java bytecode, Dalvik bytecode). It is a subset of Pilar language. Jawa defines the grammar for static analysis and IDE tools build upon it."
     url: "/jawa-language"
     btn_label: "Learn More"
   - image_path: "images/projects/jawa-compiler.png"
