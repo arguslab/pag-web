@@ -228,27 +228,27 @@ procedure `int` `com.fgwei.Test.main` (`int` v3, `int` v4)
 
 <div class="col-lg-12 bs-callout bs-callout-default">
   <h4>Compiler</h4>
-  <p><a href="../jawa-compiler">Jawa Compiler</a> compiles jawa code into java bytecode.</p>
+  <p><a href="https://github.com/arguslab/jawa-compiler">Jawa Compiler</a> compiles jawa code into java bytecode.</p>
 </div>
 
 <div class="col-lg-12 bs-callout bs-callout-warning">
   <h4>IDE</h4>
-  <p><a href="../argus-cit">Argus-CIT</a> is an Intellij plugin, which provides an IDE environment for editing Jawa.</p>
+  <p><a href="https://github.com/arguslab/argus-cit-intellij">Argus-CIT</a> is an Intellij plugin, which provides an IDE environment for editing Jawa.</p>
 </div>
 
 <div class="col-lg-12 bs-callout bs-callout-primary">
   <h4>Build with Java</h4>
-  <p><a href="../gradlew-jawa">Gradle Jawa Plugin</a> is a gradlew plugin similar to the groovy and scala gradlew plugin which adds jawa language build support.</p>
+  <p><a href="../gradle-plugins#jawa-plugin">Gradle Jawa Plugin</a> is a gradlew plugin similar to the groovy and scala gradlew plugin which adds jawa language build support.</p>
 </div>
 
 <div class="col-lg-12 bs-callout bs-callout-default">
   <h4>Build with Android</h4>
-  <p><a href="../gradlew-android-jawa">Gradle Android Jawa Plugin</a> is a gradlew plugin which adds jawa language support to official gradle android plugin.</p>
+  <p><a href="../gradle-plugins#android-jawa-plugin">Gradle Android Jawa Plugin</a> is a gradlew plugin which adds jawa language support to official gradle android plugin.</p>
 </div>
 
 <div class="col-lg-12 bs-callout bs-callout-warning">
   <h4>Translator</h4>
-  <p><a href="../jawa2java">Jawa2Java</a> is a translator which translate Jawa into Java.</p>
+  <p><a href="https://github.com/arguslab/jawa2java">Jawa2Java</a> is a translator which translate Jawa into Java.</p>
 </div>
 
 </div>

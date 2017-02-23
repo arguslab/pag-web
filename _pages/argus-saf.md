@@ -184,7 +184,7 @@ More test apks you can find from [DroidBench](https://github.com/secure-software
 
 <h2 id="work">Working with Argus-SAF</h2>
 
-Argus-SAF released two libraries: `jawa-core` and `amandroid-core`. Both of them are exist in the [Maven Central Repo](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.arguslab%22)
+Argus-SAF released two libraries: `jawa-core` and `amandroid-core`. Both of them are exist in the [Maven Central Repo](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.arguslab%22).
 
 As aforementioned, `jawa-core` contains all the static analysis apis for analyzing [Jawa](jawa-language),
 `amandroid-core` contains all the android related analyzing apis and tools.
@@ -193,7 +193,7 @@ As aforementioned, `jawa-core` contains all the static analysis apis for analyzi
 
 You can obtain Argus-SAF as library for your own project to build new static analysis tools.
 
-Here, we suppose your project is a **SBT** project:
+Here, we assume your project is a **SBT** project:
 
 Depend on `jawa-core` by editing build.sbt:
 
@@ -212,6 +212,13 @@ Depend on `amandroid-core` by editing build.sbt:
   by following format in [Maven Central Repo](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.github.arguslab%22).</p>
   <p markdown="1"> 3. `VERSION` should change to current released version.</p>
 </div>
+
+<h3 id="playground">Build Project Based on Argus-SAF</h3>
+
+[Argus-SAF-playground](https://github.com/arguslab/Argus-SAF-playground)
+is a project which has the basic setup for a Argus-SAF enhanced project with demo codes of how to perform different kind of analysis.
+Any project want to leveraging Argus-SAF can just fork from (or just learn the setup from) this repo
+and based on that to implement your own project. 
 
 <h2 id="configuration-file">Configuration File</h2>
 
@@ -651,6 +658,9 @@ class IntentInjectionSourceAndSinkManager(
       <li> <a href="#work">Working with Argus-SAF</a>
         <ul class="nav">
           <li><a href="#work-obtain">Obtain Argus-SAF as Library</a></li>
+        </ul>
+        <ul class="nav">
+          <li><a href="#playground">Build Project Based on Argus-SAF</a></li>
         </ul>
       </li>
       <li> <a href="#configuration-file">Configuration File</a></li>
