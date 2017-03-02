@@ -228,12 +228,12 @@ procedure `int` `com.fgwei.Test.main` (`int` v3, `int` v4)
 
 <div class="col-lg-12 bs-callout bs-callout-default">
   <h4>Compiler</h4>
-  <p><a href="https://github.com/arguslab/jawa-compiler">Jawa Compiler</a> compiles jawa code into java bytecode.</p>
+  <p><a href="../jawa-compiler">Jawa Compiler</a> compiles jawa code into java bytecode.</p>
 </div>
 
 <div class="col-lg-12 bs-callout bs-callout-warning">
   <h4>IDE</h4>
-  <p><a href="https://github.com/arguslab/argus-cit-intellij">Argus-CIT</a> is an Intellij plugin, which provides an IDE environment for editing Jawa.</p>
+  <p><a href="../argus-cit">Argus-CIT</a> is an Intellij plugin, which provides an IDE environment for editing Jawa.</p>
 </div>
 
 <div class="col-lg-12 bs-callout bs-callout-primary">
@@ -248,7 +248,7 @@ procedure `int` `com.fgwei.Test.main` (`int` v3, `int` v4)
 
 <div class="col-lg-12 bs-callout bs-callout-warning">
   <h4>Translator</h4>
-  <p><a href="https://github.com/arguslab/jawa2java">Jawa2Java</a> is a translator which translate Jawa into Java.</p>
+  <p><a href="../jawa2java">Jawa2Java</a> is a translator which translate Jawa into Java.</p>
 </div>
 
 </div>

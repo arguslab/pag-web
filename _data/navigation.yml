@@ -3,12 +3,3 @@ main:
 
   - title: "About"
     url: /about
-
-  - title: "Argus-SAF"
-    url: /argus-saf
-
-  - title: "Jawa Language"
-    url: /jawa-language
-
-  - title: "Gradle Plugins"
-    url: /gradle-plugins

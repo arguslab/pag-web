@@ -1,0 +1,20 @@
+# main links links
+main:
+
+  - title: "Jawa Language"
+    url: /jawa-language
+
+  - title: "Argus-SAF"
+    url: /argus-saf
+
+  - title: "Jawa Compiler"
+    url: /jawa-compiler
+
+  - title: "Gradle Plugins"
+    url: /gradle-plugins
+
+  - title: "jawa2java"
+    url: /jawa2java
+
+  - title: "Argus-CIT"
+    url: /argus-cit

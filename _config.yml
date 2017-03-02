@@ -14,7 +14,7 @@ author :
   url: http://fgwei.arguslab.org
 
 # Custom vars
-version:             1.0.1
+version:             1.0.2
 
 # The production_url is only used when full-domain names are needed
 # such as sitemap.txt
