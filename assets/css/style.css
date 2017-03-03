@@ -244,3 +244,9 @@ body {
   position: relative;
   background-attachment: fixed;
 }
+
+@media (max-width: 1024px) {
+  .page__hero--overlay {
+    background-attachment: scroll;
+  }
+}
