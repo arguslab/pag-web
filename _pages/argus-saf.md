@@ -263,41 +263,50 @@ First at all, make sure your project has `amandroid-core` as dependency.
 
 Then, following steps will decompile an apk file with loading all the classes and resources.
 
-**`A.`** Initialize `Global`. `Global` is the class loader and class path manager for our analysis.
-
-<pre><code class="scala">val apkUri = FileUtil.toUri(filePath)
-val reporter = new DefaultReporter
-val global = new Global(apkUri, reporter)
-global.setJavaLib(AndroidGlobalConfig.settings.lib_files)
-</code></pre>
-
-**`B.`** Prepare `DecompilerSettings`. It defines the decompile layout, message level, odex dependence files,
+**`A.`** Prepare `DecompilerSettings`. It defines the decompile layout, message level, odex dependence files,
 and whether force delete the output folder if it's already exist.
 
-<pre><code class="scala">val layout = DecompileLayout(outputUri)
+<pre><code class="scala">val outputUri = FileUtil.toUri(outputPath)
+val layout = DecompileLayout(outputUri)
 val settings = DecompilerSettings(
   AndroidGlobalConfig.settings.dependence_dir.map(FileUtil.toUri),
   dexLog = false, debugMode = false, removeSupportGen = true,
-  forceDelete = false, None, layout)
+  forceDelete = true, Some(new DecompileTimer(5 minutes)), layout)
 </code></pre>
 
-**`C.`** Decompile the apk and load jawa code into `Global`.
+**`B.`** Decompile the apk.
 
-<pre><code class="scala">val (outUri, srcs, _) = ApkDecompiler.decompile(apkUri, settings)
+<pre><code class="scala">val apkUri = FileUtil.toUri(apkPath)
+val (outUri, srcs, _) = ApkDecompiler.decompile(apkUri, settings)
+</code></pre>
+
+**`C.`** Initialize `ApkGlobal`, load jawa code and collect info. `ApkGlobal` is the apk resource manager, class loader and class path manager for our analysis.
+
+<pre><code class="scala">val reporter = new PrintReporter(MsgLevel.ERROR)
+val apk = new ApkGlobal(ApkModel(apkUri, outUri, srcs), reporter)
 srcs foreach {
   src =>
     val fileUri = FileUtil.toUri(FileUtil.toFilePath(outUri) + File.separator + src)
     if(FileUtil.toFile(fileUri).exists()) {
-      //store the app's jawa code in global which is organized class by class.
-      global.load(fileUri, Constants.JAWA_FILE_EXT, AndroidLibraryAPISummary)
+      //store the app's jawa code in AmandroidCodeSource which is organized class by class.
+      apk.load(fileUri, Constants.JAWA_FILE_EXT, AndroidLibraryAPISummary)
     }
 }
+AppInfoCollector.collectInfo(apk, global, outUri)
 </code></pre>
 
-**`D.`** Initialize `Apk`, load resources from decompiled app, and generate environment method for each component.
+<h3 id="tutorial-apkyard-way">Load Apk Using ApkYard</h3>
 
-<pre><code class="scala">val apk = new Apk(apkUri, outUri, srcs)
-AppInfoCollector.collectInfo(apk, global, outUri)
+`ApkYard` is a class which allows loading multiple apks and enables inter-app analysis.
+How to do inter-app analysis using `ApkYard` you can check [tutorial](#tutorial-iap).
+
+<pre><code class="scala">val apkUri = FileUtil.toUri(apkPath)
+val outputUri = FileUtil.toUri(outputPath)
+val reporter = new PrintReporter(MsgLevel.ERROR)
+val yard = new ApkYard(reporter)
+val layout = DecompileLayout(outputUri)
+val settings = DecompilerSettings(AndroidGlobalConfig.settings.dependence_dir, dexLog = false, debugMode = false, removeSupportGen = true, forceDelete = forceDelete, None, layout)
+val apk = yard.loadApk(apkUri, settings)
 </code></pre>
 
 <h3 id="tutorial-load-info">Retrieve Information from Apk</h3>
@@ -576,6 +585,16 @@ class IntentInjectionSourceAndSinkManager(
 }
 </code></pre>
 
+<h2 id="tutorial-iap">Tutorial: Inter-app Analysis</h2>
+
+<pre><code class="scala">val fileUris = apkFiles.map(FileUtil.toUri)
+val outputUri = FileUtil.toUri(apkFiles.head.substring(0, apkFiles.head.length - 4))
+val reporter = if(DEBUG) new PrintReporter(MsgLevel.INFO) else new NoReporter
+AndroidReachingFactsAnalysisConfig.resolve_static_init = true
+Context.init_context_length(0)
+val res = TaintAnalysisTask(TaintAnalysisModules.DATA_LEAKAGE, fileUris, outputUri, forceDelete = true, reporter).run
+</code></pre>
+
 </div>
 
 <div class="col-md-3" role="complementary" markdown="1">
@@ -608,6 +627,7 @@ class IntentInjectionSourceAndSinkManager(
       <li> <a href="#tutorial-load">Tutorial: Load APK</a>
         <ul class="nav">
           <li><a href="#tutorial-load-step">Step by Step</a></li>
+          <li><a href="#tutorial-apkyard-way">Load Apk Using ApkYard</a></li>
           <li><a href="#tutorial-load-info">Retrieve Information from Apk</a></li>
           <li><a href="#tutorial-load-env">Access Environment Methods</a></li>
           <li><a href="#tutorial-load-full">Full Example</a></li>
