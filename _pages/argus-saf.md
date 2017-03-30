@@ -650,6 +650,7 @@ val res = TaintAnalysisTask(TaintAnalysisModules.DATA_LEAKAGE, fileUris, outputU
           <li><a href="#tutorial-taint-ssm">Customize Source and Sink Manager</a></li>
         </ul>
       </li>
+      <li> <a href="#tutorial-iap">Tutorial: Inter-app Analysis</a> </li>
     </ul>
     <a href="#top" class="back-to-top"> Back to top </a>
   </nav>
