@@ -588,12 +588,12 @@ class IntentInjectionSourceAndSinkManager(
 <h2 id="tutorial-iap">Tutorial: Inter-app Analysis</h2>
 
 <pre><code class="scala">val fileUris = apkFiles.map(FileUtil.toUri)
-val outputUri = FileUtil.toUri(apkFiles.head.substring(0, apkFiles.head.length - 4))
-val reporter = if(DEBUG) new PrintReporter(MsgLevel.INFO) else new NoReporter
-AndroidReachingFactsAnalysisConfig.resolve_static_init = true
-Context.init_context_length(0)
+val outputUri = FileUtil.toUri(outputPath)
+val reporter = new PrintReporter(MsgLevel.ERROR)
 val res = TaintAnalysisTask(TaintAnalysisModules.DATA_LEAKAGE, fileUris, outputUri, forceDelete = true, reporter).run
 </code></pre>
+
+To customize the inter-app analysis you can check the code at [Argus-SAF:TaintAnalysisTask](https://github.com/arguslab/Argus-SAF/blob/c58eb743c6e9e94afc85398a6d20a806c6a75b19/org.argus.amandroid.core/src/main/scala/org/argus/amandroid/plugin/TaintAnalysisTask.scala).
 
 </div>
 
