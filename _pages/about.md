@@ -22,7 +22,7 @@ title: "About"
               <a href="http://arguslab.org">Argus Laboratory</a><br>
               <a href="http://www.usf.edu/engineering/cse/">CSE Department</a><br>
               <a href="http://www.usf.edu/">University of South Florida</a><br><br>
-              <a href="http://fgwei.arguslab.org/">Website</a>
+              <a href="http://www.fengguow.com/">Website</a>
             </td>
           </tr>
         </tbody></table>
