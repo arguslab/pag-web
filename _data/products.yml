@@ -20,4 +20,4 @@ main:
     url: /argus-cit
 
   - title: "Android Malware Dataset"
-      url: http://amd.arguslab.org/
+    url: "http://amd.arguslab.org/"
