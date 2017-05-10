@@ -17,7 +17,7 @@ In 14th Conference on Detection of Intrusions and Malware & Vulnerability Assess
 * [Deep Ground Truth Analysis of Current Android Malware](http://www.arguslab.org/documents/tech_reports/2017/amd_fgwei_2017.pdf). Fengguo Wei, Yuping Li, Sankardas Roy, Xinming Ou, and Wu Zhou.
 Technical report [2017-2](http://www.arguslab.org/tech_reports/2017-2), University of South Florida, Computer Science and Engineering Department. February, 2017.
 
-* [Amandroid: A Precise and General Inter-component Data Flow Analysis Framework for Security Vetting of Android Apps](http://fgwei.arguslab.org/resources/papers/AmandroidCCS14.pdf). Fengguo Wei, Sankardas Roy, Xinming Ou, Robby.
+* [Amandroid: A Precise and General Inter-component Data Flow Analysis Framework for Security Vetting of Android Apps](http://www.fengguow.com/resources/papers/AmandroidCCS14.pdf). Fengguo Wei, Sankardas Roy, Xinming Ou, Robby.
 In 21st ACM Conference on Computer and Communications Security ([CCS 2014](http://www.sigsac.org/ccs/CCS2014/)), Scottsdale, AZ, USA. Nov, 2014.
 
 **Posters:**

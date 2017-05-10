@@ -21,7 +21,7 @@ and have the capability to perform comprehensive, efficient and highly precise I
 
 <div class="bs-callout bs-callout-warning" id="argus-saf">
   <h4>Argus-SAF origin</h4>
-  <p markdown="1">Please note that **Argus-SAF** was previously well-known as **Amandroid** [[pdf](http://fgwei.arguslab.org/resources/papers/AmandroidCCS14.pdf)], and published at [CCS'14](https://www.sigsac.org/ccs/CCS2014/).</p>
+  <p markdown="1">Please note that **Argus-SAF** was previously well-known as **Amandroid** [[pdf](http://www.fengguow.com/resources/papers/AmandroidCCS14.pdf)], and published at [CCS'14](https://www.sigsac.org/ccs/CCS2014/).</p>
 </div>
 
 
@@ -453,7 +453,7 @@ graph.toGML(writer)
 <h2 id="tutorial-taint">Tutorial: Taint Analysis</h2>
 
 Argus-SAF's taint analysis leverages our `Inter-procedural Reaching Fact Analysis`
-and `Inter-procedural Data Dependence Analysis` algorithms, which reported in the **Amandroid** [[pdf](http://fgwei.arguslab.org/resources/papers/AmandroidCCS14.pdf)] paper.
+and `Inter-procedural Data Dependence Analysis` algorithms, which reported in the **Amandroid** [[pdf](http://www.fengguow.com/resources/papers/AmandroidCCS14.pdf)] paper.
 
 <h3 id="tutorial-taint-step">Step by Step</h3>
 
