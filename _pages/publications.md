@@ -10,7 +10,7 @@ title: "Publications"
 
 **Papers:**
 
-* Deep Ground Truth Analysis of Current Android Malware. 
+* [Deep Ground Truth Analysis of Current Android Malware](http://www.fengguow.com/resources/papers/AMD-DIMVA17.pdf). 
 Fengguo Wei, Yuping Li, Sankardas Roy, Xinming Ou, and Wu Zhou. 
 In 14th Conference on Detection of Intrusions and Malware & Vulnerability Assessment ([DIMVA 2017](https://itsec.cs.uni-bonn.de/dimva2017/)). Bonn, Germany. July, 2017.
 
