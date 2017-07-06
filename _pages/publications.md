@@ -12,7 +12,7 @@ title: "Publications"
 
 * Deep Ground Truth Analysis of Current Android Malware. 
 Fengguo Wei, Yuping Li, Sankardas Roy, Xinming Ou, and Wu Zhou. 
-In 14th Conference on Detection of Intrusions and Malware & Vulnerability Assessment ([DIMVA 2017](https://itsec.cs.uni-bonn.de/dimva2017/)). Bonn, Germany. July, 2017. (to appear)
+In 14th Conference on Detection of Intrusions and Malware & Vulnerability Assessment ([DIMVA 2017](https://itsec.cs.uni-bonn.de/dimva2017/)). Bonn, Germany. July, 2017.
 
 * [Amandroid: A Precise and General Inter-component Data Flow Analysis Framework for Security Vetting of Android Apps](http://www.fengguow.com/resources/papers/AmandroidCCS14.pdf). 
 Fengguo Wei, Sankardas Roy, Xinming Ou, Robby.
