@@ -105,7 +105,7 @@ Finally, ``Preprocess`` module will output meta data of ``x``.
 3. ``AndroidEnvironmentGenerator`` in ``EnvironmentBuilder`` is getting all sources codes and meta datas from previous step, then building the environment method for each of the component.
 4. ``DataFlowFramework`` provide data flow analysis technics to examine data flow problems.
 ``AndroidReachingFactsAnalysis`` takes environment methods as the entry points and build **IDFG**.
-``InterproceduralDataDependenceAnalysis`` takes **IDFG** and build **DDG**.
+``InterProceduralDataDependenceAnalysis`` takes **IDFG** and build **DDG**.
 ``AndroidDataDependentTaintAnalysis`` takes **DDG** and **SourceAndSinkManager** (provided by the developer) to do **taint analysis** and output taint result.
 5. Developer specified plugin get all the result, then he/she can do further analysis or visualize it in certain way.
 
@@ -385,9 +385,9 @@ val rda = JawaAlirInfoProvider.getRda(method, cfg)
 `Inter-procedural Data Flow Graph` (`IDFG`) is a combination of `Inter-procedural Control Flow Graph` (`ICFG`)
 and a `points-to information map` which denotes that at each program point what are the possible Object types.
 
-We have two points-to analysis algorithm to build `IDFG`: `InterproceduralSuperSpark`, `AndroidReachingFactsAnalysis`.
+We have two points-to analysis algorithm to build `IDFG`: `InterProceduralSuperSpark`, `AndroidReachingFactsAnalysis`.
 
-Most of the time `InterproceduralSuperSpark` is just used to build [Call Graph](#tutorial-graph-cg) efficiently, because
+Most of the time `InterProceduralSuperSpark` is just used to build [Call Graph](#tutorial-graph-cg) efficiently, because
 it is more light-weight than `AndroidReachingFactsAnalysis`, but still preserves enough precision (flow-,object-,field- sensitive).
 We will discuss this in [Call Graph](#tutorial-graph-cg) section.
 
@@ -425,18 +425,18 @@ val idfg = AndroidReachingFactsAnalysis(global, apk, ep, initialfacts, new Class
 
 <h3 id="tutorial-graph-iddg">Inter-procedural Data Dependence Graph</h3>
 
-<pre><code class="scala">val iddResult = InterproceduralDataDependenceAnalysis(global, idfg)
+<pre><code class="scala">val iddResult = InterProceduralDataDependenceAnalysis(global, idfg)
 </code></pre>
 
 <h3 id="tutorial-graph-cg">Call Graph</h3>
 
 There are few algorithms we can use to build `Call Graph`:
-`InterproceduralSuperSpark`, `SignatureBasedCallGraph`, `AndroidReachingFactsAnalysisBuilder`, etc.
+`InterProceduralSuperSpark`, `SignatureBasedCallGraph`, `AndroidReachingFactsAnalysisBuilder`, etc.
 
-`InterproceduralSuperSpark` is the best option if you want to build a `Call Graph` efficiently as well as preserve enough precision.
+`InterProceduralSuperSpark` is the best option if you want to build a `Call Graph` efficiently as well as preserve enough precision.
 
 <pre><code class="scala">// methods is the entry point methods you want to start with to build call graph.
-val idfg = InterproceduralSuperSpark(global, methods.map(_.getSignature))
+val idfg = InterProceduralSuperSpark(global, methods.map(_.getSignature))
 val icfg = idfg.icfg
 val call_graph = icfg.getCallGraph
 </code></pre>
