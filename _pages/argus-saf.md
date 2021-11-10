@@ -121,9 +121,8 @@ This section will help you to start with using Argus-CIT.
 
 `Requirement: Java 8`
 
-1. Click: [![Download](https://api.bintray.com/packages/arguslab/maven/argus-saf/images/download.svg)](https://bintray.com/arguslab/maven/argus-saf/_latestVersion)
-2. In arguslab bintray repo click `Files > Version Folder`
-3. Download argus-saf_***-version-assembly.jar
+1. Go to this [link](https://github.com/arguslab/Argus-SAF/tree/master/binaries).
+2. Download argus-saf_***-version-assembly.jar.
 
 <h3 id="start-run">Run</h3>
 
