@@ -119,7 +119,7 @@ This section will help you to start with using Argus-CIT.
 
 <h3 id="start-download">Download</h3>
 
-`Requirement: Java 8`
+`Requirement: Java 10`
 
 1. Go to this [link](https://github.com/arguslab/Argus-SAF/tree/master/binaries).
 2. Download argus-saf_***-version-assembly.jar.
